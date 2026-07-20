@@ -27,9 +27,20 @@ public class PickupAble : MonoBehaviour
     {
         if (holdPos != null)
         {
-            float lerpSpd = 15f;
-            Vector3 nextPos = Vector3.Lerp(transform.position, holdPos.position, Time.deltaTime * lerpSpd);
+            float dist = Vector3.Distance(holdPos.position, this.transform.position);
+            Vector3 nextPos;
+            if (dist > 2f)
+            {
+                nextPos = Vector3.Lerp(transform.position, holdPos.position, 0.5f);
+            }
+            else
+            {
+                float lerpSpd = 25f;
+                nextPos = Vector3.Lerp(transform.position, holdPos.position, Time.deltaTime * lerpSpd);
+
+            }
             rb.MovePosition(nextPos);
+
             this.transform.rotation = holdPos.rotation;
         }
     }

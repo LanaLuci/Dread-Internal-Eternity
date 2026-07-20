@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            if (!(slamDelay > 0) && !slamming && !onFloor)
+            if (!(slamDelay > 0) && !slamming && !onFloor && !(dashWindow > 0))
             {
                 slamming = true;
 
@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && dashable && !crouching)
         {
-            dashWindow = 0.2f;
+            dashWindow = 0.25f;
 
 
                 stamina -= maxStamina * 0.25f;
@@ -127,30 +127,34 @@ public class PlayerMovement : MonoBehaviour
 
             if (stamina < maxStamina)
             stamina += Time.deltaTime * 3f;
-        if (!crouching)
+        if (dashWindow > 0)
         {
-            if (dashWindow > 0)
-            {
-                dashDir.y = 0;
-                rb.linearVelocity = dashDir * dash_spd;
-            }
-            else
-            {
-                rb.linearVelocity = new Vector3(move.x * spd, rb.linearVelocity.y, move.z * spd);
-            }
+            dashDir.y = 0;
+            rb.linearVelocity = dashDir * dash_spd;
+
+
+
 
 
         }
         else
         {
 
-            rb.linearVelocity = new Vector3(move.x * crouch_spd, rb.linearVelocity.y, move.z * crouch_spd);
+            if (crouching)
+            {
+                rb.linearVelocity = new Vector3(move.x * crouch_spd, rb.linearVelocity.y, move.z * crouch_spd);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector3(move.x * spd, rb.linearVelocity.y, move.z * spd);
+            }
+
         }
 
 
         
 
-        if (Input.GetKey(KeyCode.LeftShift) && onFloor)
+        if (Input.GetKey(KeyCode.LeftShift) )
         {
 
 
@@ -160,9 +164,15 @@ public class PlayerMovement : MonoBehaviour
 
                 crouching = true;
                 col.height = stand_height / 2f;
+            Vector3 pos = camPos.localPosition;
+            if (!(dashWindow > 0))
+            {
                 col.center = new Vector3(0, stand_height / 4f, 0);
-                Vector3 pos = camPos.localPosition;
                 pos.y = camHeight / 2f;
+            }
+
+
+
                 camPos.localPosition = pos;
             
         }
