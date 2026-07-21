@@ -2,22 +2,23 @@ using UnityEngine;
 
 public class PickupAble : MonoBehaviour
 {
-    private Transform holdPos;
-    private Rigidbody rb;
+    protected Transform holdPos;
+    protected Rigidbody rb;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
     
-    public void Grab(Transform holdPoint)
+    public virtual void Grab(Transform holdPoint)
     {
         this.holdPos = holdPoint;
         rb.useGravity = false;
 
     }
 
-    public void Drop()
+    public virtual void Drop()
     {
         this.holdPos = null;
         rb.useGravity = true;

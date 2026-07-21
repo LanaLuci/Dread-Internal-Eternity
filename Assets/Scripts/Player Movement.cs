@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private LayerMask floorLayer;
     private bool onFloor;
+    public bool PlayerOnFloor => onFloor;
 
 
 
