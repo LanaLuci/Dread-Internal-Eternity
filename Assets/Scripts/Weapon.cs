@@ -7,6 +7,7 @@ public class Weapon : PickupAble
     [SerializeField] protected Transform firepoint;
     protected float atkTimer; 
     protected PlayerMovement playerMovement;
+    protected PlayerPickUp playerPickup;
 
     virtual protected void Update()
     {
@@ -39,11 +40,24 @@ public class Weapon : PickupAble
     {
         base.Grab(holdPoint);
         playerMovement = holdPoint.GetComponentInParent<PlayerMovement>();
+        playerPickup = holdPoint.GetComponentInParent<PlayerPickUp>();
+        playerPickup.NewWeaponHandle(this);
     }
 
     public override void Drop()
     {
         base.Drop();
         playerMovement = null;
+        playerPickup = null;
+    }
+
+    public virtual void Equip()
+    {
+        this.gameObject.SetActive(true);
+        this.transform.SetParent(holdPos);
+    }
+    public virtual void Unequip()
+    {
+        this.gameObject.SetActive(false);
     }
 }
