@@ -27,7 +27,9 @@ public class Pistol : Weapon
     }
 
     protected override void Update() {
-    base.Update();
+        base.Update();
+        if (holdPos == null)
+            return;
         if (secondaryTimer > 0)
             secondaryTimer -= Time.deltaTime;
         if (Input.GetMouseButtonDown(1) && !(secondaryTimer > 0))

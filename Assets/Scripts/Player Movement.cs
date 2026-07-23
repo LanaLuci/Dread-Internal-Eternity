@@ -6,14 +6,17 @@ public class PlayerMovement : MonoBehaviour
     private CapsuleCollider col;
     [SerializeField] private float spd, dash_spd, jumpForce, maxStamina, crouch_spd, slamForce;
     [SerializeField] private Transform camPos;
+    [SerializeField] private int wallJumpMax;
     private float camHeight, stand_height;
     private float stamina, chargedJumpWindow, slamDelay, dashWindow;
     public float PlayerStamina => stamina;
     public float PlayerMaxStamina => maxStamina;
     private bool dashable, crouching, slamming;
+    private int wallJump;
+    private Vector3 wallNormal;
 
-    [SerializeField] private LayerMask floorLayer;
-    private bool onFloor;
+    [SerializeField] private LayerMask floorLayer, wallLayer;
+    private bool onFloor, onWall;
     public bool PlayerOnFloor => onFloor;
 
 
@@ -34,10 +37,20 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        RaycastHit hit;
+        onWall = Physics.Raycast(transform.position, transform.forward, out hit, 0.7f, wallLayer) ||
+                 Physics.Raycast(transform.position, -transform.forward, out hit, 0.7f, wallLayer) ||
+                 Physics.Raycast(transform.position, -transform.right, out hit,0.7f, wallLayer) ||
+                 Physics.Raycast(transform.position, transform.right, out hit, 0.7f, wallLayer);
+        if (onWall)
+            wallNormal = hit.normal;
         onFloor = Physics.Raycast(transform.position, Vector3.down, 1.5f, floorLayer);
+
         if (onFloor)
         {
             slamming = false;
+            onWall = false;
+            wallJump = wallJumpMax;
         }  
 
         dashable = stamina > maxStamina *0.25f;
@@ -61,6 +74,12 @@ public class PlayerMovement : MonoBehaviour
 
                 onFloor = false;
                 
+
+            }
+            else if (onWall && wallJump > 0)
+            {
+                wallJump--;
+                rb.linearVelocity = wallNormal * 10f + Vector3.up * jumpForce;
 
             }
 
@@ -194,4 +213,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
+
 }

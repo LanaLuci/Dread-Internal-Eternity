@@ -3905,7 +3905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0496983416c0e5c48be434cf1b5c9831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 400
+  sensitivity: 500
   body: {fileID: 850130330}
 --- !u!114 &460385388
 MonoBehaviour:
@@ -4335,7 +4335,7 @@ GameObject:
   - component: {fileID: 501357501}
   - component: {fileID: 501357500}
   - component: {fileID: 501357499}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PipesWhite.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5655,7 +5655,7 @@ GameObject:
   - component: {fileID: 652090063}
   - component: {fileID: 652090062}
   - component: {fileID: 652090061}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SlantedWall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7435,9 +7435,13 @@ MonoBehaviour:
   crouch_spd: 2
   slamForce: 30
   camPos: {fileID: 460385386}
+  wallJumpMax: 2
   floorLayer:
     serializedVersion: 2
     m_Bits: 64
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!54 &850130326
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7575,6 +7579,12 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 119
+  arsenal:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &860366856
 GameObject:
   m_ObjectHideFlags: 0
@@ -8318,7 +8328,7 @@ GameObject:
   - component: {fileID: 945639363}
   - component: {fileID: 945639362}
   - component: {fileID: 945639361}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PipesBlack.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9551,7 +9561,7 @@ GameObject:
   - component: {fileID: 1116049348}
   - component: {fileID: 1116049347}
   - component: {fileID: 1116049346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SlantedWall.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15728,12 +15738,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1297179009}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1baa351a3cc9bf94688228c4afe5feba, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f354a29b62a86e4285b31529e10432e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atkCD: 0.6
+  atkCD: 0.8
   atkPrefab: {fileID: 4937992170545118315, guid: 1eb476c8396b9934fa7a893668b9e8aa, type: 3}
   firepoint: {fileID: 829829747}
+  secondaryCD: 1
+  grenadePrefab: {fileID: 683999176418995158, guid: 8986527768d95b8418f7eaa53ce7358e, type: 3}
 --- !u!1 &1303637525
 GameObject:
   m_ObjectHideFlags: 0
@@ -16139,7 +16151,7 @@ GameObject:
   - component: {fileID: 1329035856}
   - component: {fileID: 1329035855}
   - component: {fileID: 1329035854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SlantedWall.008 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17471,7 +17483,7 @@ GameObject:
   - component: {fileID: 1494153113}
   - component: {fileID: 1494153112}
   m_Layer: 0
-  m_Name: Pistol (1)
+  m_Name: Pickup Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17497,8 +17509,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494153111}
   serializedVersion: 4
-  m_Mass: 3
-  m_Drag: 5
+  m_Mass: 1
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -17515,7 +17527,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!4 &1494153114
 Transform:
   m_ObjectHideFlags: 0
@@ -18577,7 +18589,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1571711027}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19475,7 +19487,7 @@ GameObject:
   - component: {fileID: 1708426048}
   - component: {fileID: 1708426047}
   - component: {fileID: 1708426046}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PipesBlack.002 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21154,7 +21166,7 @@ GameObject:
   - component: {fileID: 1864566731}
   - component: {fileID: 1864566730}
   - component: {fileID: 1864566729}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PipesWhite.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21490,7 +21502,7 @@ GameObject:
   - component: {fileID: 1902192128}
   - component: {fileID: 1902192127}
   - component: {fileID: 1902192126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TerminalSmool (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21803,7 +21815,7 @@ GameObject:
   - component: {fileID: 1924525121}
   - component: {fileID: 1924525120}
   - component: {fileID: 1924525119}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TerminalSmool
   m_TagString: Untagged
   m_Icon: {fileID: 0}

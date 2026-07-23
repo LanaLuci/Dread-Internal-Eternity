@@ -55,9 +55,12 @@ public class Weapon : PickupAble
     {
         this.gameObject.SetActive(true);
         this.transform.SetParent(holdPos);
+        this.rb.isKinematic = true;
     }
     public virtual void Unequip()
     {
+        this.rb.isKinematic = false;
         this.gameObject.SetActive(false);
+
     }
 }

@@ -8,8 +8,8 @@ public class CameraMovement : MonoBehaviour
     private float xRota;
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
 
