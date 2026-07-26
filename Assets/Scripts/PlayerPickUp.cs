@@ -56,14 +56,18 @@ public class PlayerPickUp : MonoBehaviour
                         weaponID = 0;
                     }
                 }
-                Weapon currentWeapon = currentPickup.GetComponent<Weapon>();
-                if (currentWeapon == null)
+                Weapon currentWeapon;
+                if (currentPickup != null)
                 {
-                    currentPickup.Drop();
-                }
-                else
-                {
-                    currentWeapon.Unequip();
+                    currentWeapon = currentPickup.GetComponent<Weapon>();
+                    if (currentWeapon == null)
+                    {
+                        currentPickup.Drop();
+                    }
+                    else
+                    {
+                        currentWeapon.Unequip();
+                    }
                 }
 
 

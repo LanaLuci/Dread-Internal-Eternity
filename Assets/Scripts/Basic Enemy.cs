@@ -1,14 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class BasicEnemy : PoEnemy
 {
     [SerializeField] private float detectionRange, spd;
     private Transform target;
-    private Rigidbody rb;
-    void Start()
+
+    protected override void Start()
     {
-        hp = maxHP;
-        rb = GetComponent<Rigidbody>();
+        base.Start();
+
         target = GameObject.Find("Player").transform;
 
     }

@@ -6,7 +6,7 @@ public class PickupAble : MonoBehaviour
     protected Rigidbody rb;
 
 
-    void Start()
+    virtual protected void Start()
     {
         rb = GetComponent<Rigidbody>();
     }

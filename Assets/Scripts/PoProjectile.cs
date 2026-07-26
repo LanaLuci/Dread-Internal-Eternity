@@ -24,4 +24,9 @@ public class PoProjectile : MonoBehaviour
         }
         Destroy(this.gameObject);
     }
+
+    virtual public void ChargeUpDmg(float amount)
+    {
+        dmg += amount;
+    }
 }

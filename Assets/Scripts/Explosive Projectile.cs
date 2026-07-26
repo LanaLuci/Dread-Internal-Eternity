@@ -29,10 +29,19 @@ public class ExplosiveProjectile : PoProjectile
             Rigidbody hitRB = hit.transform.GetComponentInParent<Rigidbody>();
             if (hitRB != null)
             {
+                if (hitRB.GetComponent<PoProjectile>() != null)
+                    Destroy(hitRB.gameObject);
                 hitRB.AddExplosionForce(power, transform.position,radius, 1f, ForceMode.Impulse);
             }
 
         }
         Destroy(this.gameObject);
+    }
+
+    public void ChargeUpRadius(float amount)
+    {
+        power = power / (radius / (radius + amount));
+        radius += amount;
+
     }
 }

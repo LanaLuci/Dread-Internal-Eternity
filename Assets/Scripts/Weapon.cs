@@ -2,12 +2,19 @@ using UnityEngine;
 
 public class Weapon : PickupAble
 {
-    [SerializeField] protected float atkCD;
+    [SerializeField] protected float atkCD, secondaryCD;
     [SerializeField] protected GameObject atkPrefab;
     [SerializeField] protected Transform firepoint;
-    protected float atkTimer; 
+    protected float atkTimer, secondaryTimer; 
     protected PlayerMovement playerMovement;
     protected PlayerPickUp playerPickup;
+    protected BoxCollider collider;
+
+    protected override void Start()
+    {
+        base.Start();
+        collider = GetComponentInChildren<BoxCollider>();
+    }
 
     virtual protected void Update()
     {
@@ -16,11 +23,17 @@ public class Weapon : PickupAble
 
         if (atkTimer > 0)
             atkTimer -= Time.deltaTime;
+        if (secondaryTimer > 0)
+            secondaryTimer -= Time.deltaTime;
 
         if (Input.GetMouseButtonDown(0) && !(atkTimer>0))
         {
 
             PrimaryFire();
+        }
+        if (Input.GetMouseButtonDown(1) && !(secondaryTimer>0))
+        {
+            SecondaryFire();
         }
 
     }
@@ -49,6 +62,8 @@ public class Weapon : PickupAble
         base.Drop();
         playerMovement = null;
         playerPickup = null;
+        this.collider.gameObject.SetActive(true);
+        this.transform.SetParent(null);
     }
 
     public virtual void Equip()
@@ -56,6 +71,7 @@ public class Weapon : PickupAble
         this.gameObject.SetActive(true);
         this.transform.SetParent(holdPos);
         this.rb.isKinematic = true;
+        this.collider.gameObject.SetActive(false);
     }
     public virtual void Unequip()
     {
