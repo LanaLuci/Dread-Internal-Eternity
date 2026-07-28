@@ -27,6 +27,8 @@ public class Pistol : Weapon
 
         if (holdPos == null)
             return;
+        if (!equipped)
+            return;
         if (secondaryTimer > 0 && !chargingSecondary)
             secondaryTimer -= Time.deltaTime;
         if (atkTimer > 0 && !chargingPrimary)

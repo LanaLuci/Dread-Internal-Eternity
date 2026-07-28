@@ -15,7 +15,11 @@ public class PoEnemy : MonoBehaviour, IDmgable
 
     public virtual void TakeDmg(float amount)
     {
+        if (amount > hp * 0.4f)
+            Debug.Log("TS GONNA HURT");
+        Debug.Log("take " +  amount + " dmg");
         hp -= amount;
+
         if (hp <= 0)
             Destroy(gameObject);
     }
@@ -36,9 +40,9 @@ public class PoEnemy : MonoBehaviour, IDmgable
         while (stack > 0)
         {
             yield return new WaitForSeconds(1f);
-
+            Debug.Log("LIGHT UP THE ROOM");
             TakeDmg(dmg);
-            Debug.Log("burn");
+
             stack--;
 
 

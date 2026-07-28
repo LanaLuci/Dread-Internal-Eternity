@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float PlayerMaxStamina => maxStamina;
     private bool dashable, crouching, slamming;
     private int wallJump;
-    private Vector3 wallNormal;
+    private Vector3 wallNormal, knockbackVelocity;
 
     [SerializeField] private LayerMask floorLayer, wallLayer;
     private bool onFloor, onWall;
@@ -79,7 +79,8 @@ public class PlayerMovement : MonoBehaviour
             else if (onWall && wallJump > 0)
             {
                 wallJump--;
-                rb.linearVelocity = wallNormal * 10f + Vector3.up * jumpForce;
+                rb.linearVelocity = Vector3.up * jumpForce;
+                Knockback(20f, 1);
 
             }
 
@@ -133,6 +134,9 @@ public class PlayerMovement : MonoBehaviour
         if (dashWindow > 0)
             dashWindow -= Time.deltaTime;
 
+        if (knockbackVelocity.sqrMagnitude > 0)
+            knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, Time.deltaTime * 10f);
+
         Vector3 move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
         Vector3 dashDir;
         if (move.sqrMagnitude == 0)
@@ -162,11 +166,11 @@ public class PlayerMovement : MonoBehaviour
 
             if (crouching)
             {
-                rb.linearVelocity = new Vector3(move.x * crouch_spd, rb.linearVelocity.y, move.z * crouch_spd);
+                rb.linearVelocity = new Vector3(move.x * crouch_spd + knockbackVelocity.x, rb.linearVelocity.y + knockbackVelocity.y, move.z * crouch_spd + knockbackVelocity.z);
             }
             else
             {
-                rb.linearVelocity = new Vector3(move.x * spd, rb.linearVelocity.y, move.z * spd);
+                rb.linearVelocity = new Vector3(move.x * spd + knockbackVelocity.x, rb.linearVelocity.y + knockbackVelocity.y, move.z * spd + knockbackVelocity.z);
             }
 
         }
@@ -212,6 +216,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
+    }
+
+    public void Knockback(float power, int mode)
+    {
+        if (mode == 0)
+        {
+            knockbackVelocity = -transform.forward * power;
+        }
+        else
+        {
+            knockbackVelocity = wallNormal * power;
+        }
     }
 
 

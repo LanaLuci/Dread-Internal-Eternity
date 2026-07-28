@@ -15,6 +15,7 @@ public class PickupAble : MonoBehaviour
     {
         this.holdPos = holdPoint;
         rb.useGravity = false;
+        rb.isKinematic = true;
 
     }
 
@@ -22,6 +23,7 @@ public class PickupAble : MonoBehaviour
     {
         this.holdPos = null;
         rb.useGravity = true;
+        rb.isKinematic = false;
     }
 
     void FixedUpdate()

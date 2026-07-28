@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1682919622126259908}
   - component: {fileID: 3435112477946221162}
   - component: {fileID: 1242076561701751059}
-  - component: {fileID: 8841279627817537059}
+  - component: {fileID: 5883841262961665438}
   m_Layer: 0
   m_Name: Bullet_Pistol_B
   m_TagString: Untagged
@@ -140,7 +140,7 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: -0.005}
---- !u!114 &8841279627817537059
+--- !u!114 &5883841262961665438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4937992170545118315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 688ba3360bb7bfc4aa0a08cfda47b452, type: 3}
+  m_Script: {fileID: 11500000, guid: 0580698d79d16ac41803fdd5e26445bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spd: 35

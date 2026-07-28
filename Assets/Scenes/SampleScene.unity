@@ -3902,11 +3902,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkCD: 1.5
   secondaryCD: 0
+  visual: {fileID: 2125815929}
   atkPrefab: {fileID: 596347763104157635, guid: 12fae2cec1f216d40a5064a4e1403022, type: 3}
   firepoint: {fileID: 545252464}
   chargeStackMax: 5
   bulletPerShot: 5
   spreadAngle: 90
+  burstRecoil: 100
 --- !u!1 &437646274
 GameObject:
   m_ObjectHideFlags: 0
@@ -7694,6 +7696,7 @@ GameObject:
   - component: {fileID: 850130326}
   - component: {fileID: 850130325}
   - component: {fileID: 850130331}
+  - component: {fileID: 850130332}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -7870,6 +7873,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &850130332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850130324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1309a53bddffaea499ef13b04639910c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
 --- !u!1 &860366856
 GameObject:
   m_ObjectHideFlags: 0
@@ -16028,6 +16044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atkCD: 0.8
   secondaryCD: 1
+  visual: {fileID: 298688765}
   atkPrefab: {fileID: 4937992170545118315, guid: 1eb476c8396b9934fa7a893668b9e8aa, type: 3}
   firepoint: {fileID: 829829747}
   maxChargePrimary: 1.5
@@ -21401,7 +21418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543490ffbdfe6d540b46f2ae85c671ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
+  maxHP: 160
   detectionRange: 10
   spd: 3
 --- !u!1 &1823823623

@@ -3,12 +3,13 @@ using UnityEngine;
 public class Weapon : PickupAble
 {
     [SerializeField] protected float atkCD, secondaryCD;
-    [SerializeField] protected GameObject atkPrefab;
+    [SerializeField] protected GameObject visual, atkPrefab;
     [SerializeField] protected Transform firepoint;
     protected float atkTimer, secondaryTimer; 
     protected PlayerMovement playerMovement;
     protected PlayerPickUp playerPickup;
     protected BoxCollider collider;
+    protected bool equipped;
 
     protected override void Start()
     {
@@ -20,7 +21,8 @@ public class Weapon : PickupAble
     {
         if (holdPos == null)
             return;
-
+        if (!equipped)
+            return;
         if (atkTimer > 0)
             atkTimer -= Time.deltaTime;
         if (secondaryTimer > 0)
@@ -68,15 +70,17 @@ public class Weapon : PickupAble
 
     public virtual void Equip()
     {
-        this.gameObject.SetActive(true);
+        this.equipped = true;
+        this.visual.SetActive(true);
         this.transform.SetParent(holdPos);
-        this.rb.isKinematic = true;
+
         this.collider.gameObject.SetActive(false);
     }
     public virtual void Unequip()
     {
-        this.rb.isKinematic = false;
-        this.gameObject.SetActive(false);
+
+        this.equipped= false;
+        this.visual.SetActive(false);
 
     }
 }
