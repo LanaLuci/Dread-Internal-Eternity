@@ -222,7 +222,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (mode == 0)
         {
-            knockbackVelocity = -transform.forward * power;
+            knockbackVelocity = -camPos.forward * power;
         }
         else
         {

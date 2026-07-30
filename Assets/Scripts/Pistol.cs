@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    [SerializeField] private float maxChargePrimary, maxChargeSecondary, chargeUpDmgMax, chargeUpRadiusMax;
-    [SerializeField] private GameObject grenadePrefab;
+    [SerializeField] protected float maxChargePrimary, maxChargeSecondary, chargeUpDmgMax, chargeUpRadiusMax;
+    [SerializeField] protected GameObject grenadePrefab;
     private float  primaryChargeTime, secondaryChargeTime;
     private bool chargingPrimary = false, chargingSecondary = false;
 

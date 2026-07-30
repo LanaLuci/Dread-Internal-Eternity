@@ -3,9 +3,13 @@ using System.Collections;
 
 public class PoEnemy : MonoBehaviour, IDmgable
 {
-    [SerializeField] protected float maxHP;
+    [SerializeField] protected float maxHP, electrifyRadius;
     protected float hp;
     protected Rigidbody rb;
+
+
+    protected float electrifyTimer;
+    public bool electrified { get; protected set; }
 
     protected virtual void Start()
     {
@@ -18,7 +22,14 @@ public class PoEnemy : MonoBehaviour, IDmgable
         if (amount > hp * 0.4f)
             Debug.Log("TS GONNA HURT");
         Debug.Log("take " +  amount + " dmg");
-        hp -= amount;
+        if (electrified)
+        {
+            Electrify(amount, electrifyTimer);
+        }
+
+            hp -= amount;
+
+
 
         if (hp <= 0)
             Destroy(gameObject);
@@ -35,6 +46,24 @@ public class PoEnemy : MonoBehaviour, IDmgable
         StartCoroutine(BurnCoroutine(amount, stack));
     }
 
+    public virtual void GetElectrified(float duration)
+    {
+        StartCoroutine(ElectrifyCoroutine(duration));
+
+    }
+
+    protected virtual IEnumerator ElectrifyCoroutine(float duration)
+    {
+        electrified = true;
+        electrifyTimer = duration;
+        while (electrifyTimer > 0)
+        {
+            electrifyTimer -= Time.deltaTime;
+            yield return null;
+        }
+        
+        electrified = false;
+    }
     protected virtual IEnumerator BurnCoroutine(float dmg, int stack)
     {
         while (stack > 0)
@@ -47,5 +76,23 @@ public class PoEnemy : MonoBehaviour, IDmgable
 
 
         }
+    }
+
+    protected virtual void Electrify(float amount, float duration)
+    {
+        Collider[] hits = Physics.OverlapSphere(this.transform.position, electrifyRadius);
+        foreach (var hit in hits)
+        {
+            IDmgable dmgable = hit.transform.GetComponent<IDmgable>();
+            if (dmgable != null && dmgable != this) {
+                Debug.Log("ZAP");
+                dmgable.TakeDmg(amount);
+                if (!dmgable.electrified)
+                {
+
+                    dmgable.GetElectrified(duration * 0.75f);
+                }
+            }
+        } 
     }
 }

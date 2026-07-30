@@ -8,6 +8,7 @@ public class Weapon : PickupAble
     protected float atkTimer, secondaryTimer; 
     protected PlayerMovement playerMovement;
     protected PlayerPickUp playerPickup;
+
     protected BoxCollider collider;
     protected bool equipped;
 
@@ -42,12 +43,18 @@ public class Weapon : PickupAble
 
     virtual protected void PrimaryFire()
     {
-        Instantiate(atkPrefab, firepoint.position, firepoint.rotation);
+        if (atkPrefab != null)
+        {
+            Instantiate(atkPrefab, firepoint.position, firepoint.rotation);
+        }
         atkTimer = atkCD;
     }
     virtual protected void SecondaryFire()
     {
-        Instantiate(atkPrefab, firepoint.position, firepoint.rotation);
+        if (atkPrefab != null)
+        {
+            Instantiate(atkPrefab, firepoint.position, firepoint.rotation);
+        }
         atkTimer = atkCD;
     }
 
@@ -56,6 +63,7 @@ public class Weapon : PickupAble
         base.Grab(holdPoint);
         playerMovement = holdPoint.GetComponentInParent<PlayerMovement>();
         playerPickup = holdPoint.GetComponentInParent<PlayerPickUp>();
+
         playerPickup.NewWeaponHandle(this);
     }
 
