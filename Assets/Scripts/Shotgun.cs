@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class Shotgun : Weapon
 {
-    [SerializeField] private int chargeStackMax, bulletPerShot;
+    [Header("Exclusive Properties - Shotgun")]
+    [SerializeField] private int chargeStackMax;
+    [SerializeField] private int bulletPerShot;
     [SerializeField] private float spreadAngle, burstRecoil;
     private int chargeStack;
     private float leftBuffer, rightBuffer;
 
-
+    //DESCRIPTION: both modes share CD, press both for burst, F to stack dmg, more stack more dmg + longer CD
+    //burn target at stack 4 or 5, crouch or dash can manipulate bullet count and angle
 
 
     protected override void Update()
@@ -18,6 +21,7 @@ public class Shotgun : Weapon
             return; 
         if (atkTimer > 0)
             atkTimer -= Time.deltaTime;
+        //prioritize the burst
         if (leftBuffer > 0 && rightBuffer > 0)
             BurstFire();
         if (leftBuffer > 0)
@@ -33,7 +37,7 @@ public class Shotgun : Weapon
                 SecondaryFire();
         }
 
-
+        //delay normal shots to allow the burst
         if (Input.GetMouseButtonDown(0) && !(atkTimer > 0))
         {
 
@@ -57,7 +61,8 @@ public class Shotgun : Weapon
 
     protected override void PrimaryFire()
     {
-
+        PlayAnim();
+        //average angle between 2 bullets
         float step;
         if (bulletPerShot > 1)
         {
@@ -67,16 +72,50 @@ public class Shotgun : Weapon
         {
             step = 0f;
         }
-        for (int i = 0;i< bulletPerShot;i++)
+        //movement dependant function changes
+        int bulletCount;
+        float shotAngle;
+        if (playerMovement.PlayerDashing)
         {
+            bulletCount = bulletPerShot + 2;
+            shotAngle = spreadAngle + step * 2f;
+        }
+        else
+        {
+            bulletCount = bulletPerShot;
+        }
 
-            float angle = -spreadAngle / 2f + step * i;
-            Quaternion rotation = firepoint.rotation * Quaternion.Euler(0f,angle,0f);
-            IncendiaryProjectile bullet = Instantiate(atkPrefab, firepoint.position, rotation).GetComponent<IncendiaryProjectile>();
-            bullet.ChargeUpDmg(chargeStack);
-            if (chargeStack > 3)
+        if (playerMovement.PlayerCrouching)
+        {
+            shotAngle = spreadAngle - step * 2f;
+        }
+        else
+        {
+            shotAngle = spreadAngle;
+        }
+        //recalculate step for new spread
+        if (bulletCount > 1)
+        {
+            step = shotAngle / (bulletCount - 1);
+        }
+        else
+        {
+            step = 0f;
+        }
+
+        for (int i = 0; i < bulletCount; i++)
+            {
+
+                float angle = -shotAngle / 2f + step * i;
+                Quaternion rotation = firepoint.rotation * Quaternion.Euler(0f, angle, 0f);
+                IncendiaryProjectile bullet = Instantiate(atkPrefab, firepoint.position, rotation).GetComponent<IncendiaryProjectile>();
+                bullet.ChargeUpDmg(chargeStack);
+                if (chargeStack > 3)
+            {
                 bullet.ChargeUpBurn(1f, chargeStack - 1);
-                
+                shaker.Shake(0.3f, 0.25f);
+            }
+
         }
 
         atkTimer = atkCD + 0.5f * chargeStack;
@@ -84,6 +123,7 @@ public class Shotgun : Weapon
     }
     protected override void SecondaryFire()
     {
+        PlayAnim();
         float step;
         if (bulletPerShot>1)
         {
@@ -93,15 +133,46 @@ public class Shotgun : Weapon
         {
             step = 0f;
         }
+        int bulletCount;
+        float shotAngle;
+        if (playerMovement.PlayerDashing)
+        {
+            bulletCount = bulletPerShot + 2;
+            shotAngle = spreadAngle + step * 2f;
+        }
+        else
+        {
+            bulletCount = bulletPerShot;
+        }
 
-            for (int i = 0; i < bulletPerShot; i++)
+        if (playerMovement.PlayerCrouching)
+        {
+            shotAngle = spreadAngle - step * 2f;
+        }
+        else
+        {
+            shotAngle = spreadAngle;
+        }
+        if (bulletCount > 1)
+        {
+            step = shotAngle / (bulletCount - 1);
+        }
+        else
+        {
+            step = 0f;
+        }
+
+        for (int i = 0; i < bulletCount; i++)
             {
-                float angle = -spreadAngle / 2f + step * i;
+                float angle = -shotAngle / 2f + step * i;
                 Quaternion rotation = firepoint.rotation * Quaternion.Euler(angle, 0f, 0f);
             IncendiaryProjectile bullet = Instantiate(atkPrefab, firepoint.position, rotation).GetComponent<IncendiaryProjectile>();
             bullet.ChargeUpDmg(chargeStack);
             if (chargeStack > 3)
+            {
                 bullet.ChargeUpBurn(1f, chargeStack - 1);
+                shaker.Shake(0.3f, 0.25f);
+            }
         }
         atkTimer = atkCD + 0.5f * chargeStack;
         chargeStack = 0;
@@ -109,6 +180,8 @@ public class Shotgun : Weapon
 
     protected virtual void BurstFire()
     {
+        PlayAnim();
+        shaker.Shake(0.5f, 0.25f);
         leftBuffer = 0f;
         rightBuffer = 0f;
         for (int i = 0; i < bulletPerShot * 4; i++)

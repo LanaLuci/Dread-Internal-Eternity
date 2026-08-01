@@ -27,7 +27,7 @@ public class ExplosiveProjectile : PoProjectile
             if (dmgable != null)
                 dmgable.TakeDmg(this.dmg);
             Rigidbody hitRB = hit.transform.GetComponentInParent<Rigidbody>();
-            if (hitRB != null)
+            if (hitRB != null && hitRB.transform.GetComponentInParent<PistolBullet>() == null)
             {
                 if (hitRB.GetComponent<PoProjectile>() != null)
                     Destroy(hitRB.gameObject);

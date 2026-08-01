@@ -4,12 +4,15 @@ using System.Collections;
 
 public class Railgun : Weapon
 {
-    [SerializeField] protected float primaryDmg, secondaryDmgInit, secondaryDmgHold, maxHoldSecondary;
+    [Header("Exclusive Properties - Railgun")]
     [SerializeField] protected LayerMask reflectLayer;
+    [SerializeField] protected float primaryDmg, secondaryDmgInit, secondaryDmgHold, maxHoldSecondary, maxRange, holdRecoil;
+
     protected bool holdingSecondary = false;
     protected int primaryBounce;
 
-
+    //DESCRIPTION: both modes have long CD but can reload even while not equipped, F to toggle bounce mode for primary fire, bounce mode gives longer CD
+    //secondary fire can hold for sustaining dmg, the longer the hold the longer the CD, interrupt the sustaining beam with primary fire to electrify targets
 
 
     protected float holdSecondaryTime;
@@ -28,13 +31,12 @@ public class Railgun : Weapon
             atkTimer -= Time.deltaTime;
         if (secondaryTimer > 0)
             secondaryTimer -= Time.deltaTime;
-        if (primaryBounce < 0)
-            primaryBounce = 0;
+
         if (!equipped)
             return;
         if (Input.GetMouseButtonDown(0) && !(atkTimer>0))
         {
-
+            //although using same input, interrupt fire counts as part of the secondary fire
             if (!holdingSecondary)
             {
 
@@ -68,7 +70,7 @@ public class Railgun : Weapon
         if (Input.GetMouseButtonUp(1) && holdingSecondary)
         {
             holdingSecondary = false;
-            secondaryTimer = secondaryCD + Mathf.Lerp(-2f, 4f, holdSecondaryTime / maxHoldSecondary);
+            secondaryTimer = secondaryCD + Mathf.Lerp(0f, 4f, holdSecondaryTime / maxHoldSecondary);
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -86,25 +88,28 @@ public class Railgun : Weapon
 
     protected override void PrimaryFire()
     {
-
+        PlayAnim();
         Vector3 start, dir;
         start = firepoint.position;
         dir = firepoint.forward;
+        int remainingBounce = primaryBounce;
         if (primaryBounce > 0)
         {
+            shaker.Shake(0.6f, 0.25f);
             atkTimer = atkCD * 2f;
         }
         else 
         {
-
+            shaker.Shake(0.4f, 0.25f);
             atkTimer = atkCD;
         }
 
+
         
-        while (primaryBounce >= 0)
+        while (remainingBounce >= 0)
         {
 
-            if (Physics.Raycast(start, dir, out RaycastHit wallHit, Mathf.Infinity, reflectLayer))
+            if (Physics.Raycast(start, dir, out RaycastHit wallHit, maxRange, reflectLayer))
             {
 
 
@@ -122,8 +127,12 @@ public class Railgun : Weapon
 
                 start = wallHit.point;
                 dir = Vector3.Reflect(dir, wallHit.normal);
-                primaryBounce--;
+                remainingBounce--;
 
+            }
+            else
+            {
+                break;
             }
 
         }
@@ -131,7 +140,8 @@ public class Railgun : Weapon
 
     protected override void SecondaryFire() 
     {
-        if (Physics.Raycast(firepoint.position, firepoint.forward, out RaycastHit wallHit, Mathf.Infinity, reflectLayer))
+        shaker.Shake(0.4f, 0.15f);
+        if (Physics.Raycast(firepoint.position, firepoint.forward, out RaycastHit wallHit, maxRange, reflectLayer))
         {
 
 
@@ -153,31 +163,46 @@ public class Railgun : Weapon
 
     protected virtual void InterruptFire()
     {
+        //not resetting the CD for primary, allow a primary shot to follow to exploit the electrify effect on targets
+        //affected by bounce mode toggle
         holdingSecondary = false;
-        secondaryTimer = secondaryCD + Mathf.Lerp(-2f, 4f, holdSecondaryTime / maxHoldSecondary);
-        if (Physics.Raycast(firepoint.position, firepoint.forward, out RaycastHit wallHit, Mathf.Infinity, reflectLayer))
+        secondaryTimer = secondaryCD + Mathf.Lerp(0f, 4f, holdSecondaryTime / maxHoldSecondary);
+        Vector3 start, dir;
+        start = firepoint.position;
+        dir = firepoint.forward;
+        int remainingBounce = primaryBounce;
+        while (remainingBounce >= 0)
         {
-
-            StartCoroutine(BeamRender(firepoint.position, wallHit.point, 0.4f));
-
-
-
-            RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 0.2f, firepoint.forward, wallHit.distance);
-            foreach (var hit in hits)
+            if (Physics.Raycast(start, dir, out RaycastHit wallHit, Mathf.Infinity, reflectLayer))
             {
-                IDmgable dmgable = hit.transform.GetComponent<IDmgable>();
-                if (dmgable != null)
+
+                StartCoroutine(BeamRender(start, wallHit.point, 0.4f));
+
+
+
+                RaycastHit[] hits = Physics.SphereCastAll(start, 0.2f, dir, wallHit.distance);
+                foreach (var hit in hits)
                 {
-                    dmgable.TakeDmg(primaryDmg);
-                    if (!dmgable.electrified)
-                        dmgable.GetElectrified(2.5f);
+                    IDmgable dmgable = hit.transform.GetComponent<IDmgable>();
+                    if (dmgable != null)
+                    {
+                        dmgable.TakeDmg(primaryDmg * 0.4f);
+                        if (!dmgable.electrified)
+                            dmgable.GetElectrified(2.5f);
+                    }
+
                 }
 
+                start = wallHit.point;
+                dir = Vector3.Reflect(dir, wallHit.normal);
+                remainingBounce--;
+
+
             }
-
-
-
-
+            else
+            {
+                break;
+            }
         }
 
     }
@@ -186,11 +211,11 @@ public class Railgun : Weapon
     while (holdingSecondary)
         {
 
-            if (Physics.Raycast(firepoint.position, firepoint.forward, out RaycastHit wallHit, Mathf.Infinity, reflectLayer))
+            if (Physics.Raycast(firepoint.position, firepoint.forward, out RaycastHit wallHit, maxRange, reflectLayer))
             {
 
                 StartCoroutine(BeamRender(firepoint.position, wallHit.point, 2f));
-
+                shaker.Shake(0.1f, 0.15f);
 
 
                 RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 1f, firepoint.forward, wallHit.distance);
@@ -200,7 +225,7 @@ public class Railgun : Weapon
                     if (dmgable != null)
                         dmgable.TakeDmg(secondaryDmgHold);
                 }
-
+                playerMovement.Knockback(holdRecoil, 0);
             }
             yield return new WaitForSeconds(0.1f);
 

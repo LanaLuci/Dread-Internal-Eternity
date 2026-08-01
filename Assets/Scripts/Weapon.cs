@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class Weapon : PickupAble
 {
+    [Header("Generic Proterties - Weapon")]
+    [SerializeField] protected Transform firepoint;
     [SerializeField] protected float atkCD, secondaryCD;
     [SerializeField] protected GameObject visual, atkPrefab;
-    [SerializeField] protected Transform firepoint;
+
     protected float atkTimer, secondaryTimer; 
     protected PlayerMovement playerMovement;
     protected PlayerPickUp playerPickup;
+    protected Shaker shaker;
 
     protected BoxCollider collider;
     protected bool equipped;
+
+    [Header("Animation")]
+    [SerializeField] protected Animator animator;
+    protected static int FireTrigger = Animator.StringToHash("Fire");
 
     protected override void Start()
     {
@@ -49,6 +56,7 @@ public class Weapon : PickupAble
         }
         atkTimer = atkCD;
     }
+
     virtual protected void SecondaryFire()
     {
         if (atkPrefab != null)
@@ -63,7 +71,7 @@ public class Weapon : PickupAble
         base.Grab(holdPoint);
         playerMovement = holdPoint.GetComponentInParent<PlayerMovement>();
         playerPickup = holdPoint.GetComponentInParent<PlayerPickUp>();
-
+        shaker = GetComponentInChildren<Shaker>();
         playerPickup.NewWeaponHandle(this);
     }
 
@@ -72,6 +80,7 @@ public class Weapon : PickupAble
         base.Drop();
         playerMovement = null;
         playerPickup = null;
+        shaker = null;
         this.collider.gameObject.SetActive(true);
         this.transform.SetParent(null);
     }
@@ -84,11 +93,17 @@ public class Weapon : PickupAble
 
         this.collider.gameObject.SetActive(false);
     }
+
     public virtual void Unequip()
     {
 
         this.equipped= false;
         this.visual.SetActive(false);
 
+    }
+
+    virtual protected void PlayAnim()
+    {
+        animator.SetTrigger(FireTrigger);
     }
 }

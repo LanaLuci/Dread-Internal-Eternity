@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask floorLayer, wallLayer;
     private bool onFloor, onWall;
     public bool PlayerOnFloor => onFloor;
+    public bool PlayerCrouching => crouching;
+    public bool PlayerDashing => dashWindow > 0f;
 
 
 

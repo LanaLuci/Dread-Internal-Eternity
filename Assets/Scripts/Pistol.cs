@@ -2,17 +2,25 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    [SerializeField] protected float maxChargePrimary, maxChargeSecondary, chargeUpDmgMax, chargeUpRadiusMax;
+    [Header("Exclusive Properties - Pistol")]
     [SerializeField] protected GameObject grenadePrefab;
+    [SerializeField] protected float maxChargePrimary, maxChargeSecondary, chargeUpDmgMax, chargeUpRadiusMax;
+
     private float  primaryChargeTime, secondaryChargeTime;
     private bool chargingPrimary = false, chargingSecondary = false;
 
+
+
+    //DESCRIPTION: both modes can charge for enhancing effects, more dmg for bullet or more range for grenade
+    //detonate the grenade by the bullet will stack dmg, fire in mid air for shorter CD, overhalf charged bullet can auto ricochet off grenade into nearest enemy
+
     protected override void PrimaryFire()
     {
-        PoProjectile bullet = Instantiate(atkPrefab, firepoint.position, firepoint.rotation).GetComponent<PoProjectile>();
+        PistolBullet bullet = Instantiate(atkPrefab, firepoint.position, firepoint.rotation).GetComponent<PistolBullet>();
         bullet.ChargeUpDmg(Mathf.Lerp(0f, chargeUpDmgMax, primaryChargeTime / maxChargePrimary));
-
-
+        if (primaryChargeTime >= maxChargePrimary/2f)
+            bullet.ricochet = true;
+        PlayAnim();
     }
 
     protected override void SecondaryFire() {
@@ -49,7 +57,8 @@ public class Pistol : Weapon
         if (chargingPrimary)
         {
             primaryChargeTime += Time.deltaTime;
-            
+            if (primaryChargeTime > maxChargePrimary * 0.1f)
+            shaker.Shake(0.1f, 0.2f);
             primaryChargeTime = Mathf.Clamp(primaryChargeTime, 0f, maxChargePrimary);
         }
         if (Input.GetMouseButtonUp(0) && chargingPrimary)
@@ -74,6 +83,8 @@ public class Pistol : Weapon
         if (chargingSecondary)
         {
             secondaryChargeTime += Time.deltaTime;
+            if (secondaryChargeTime > maxChargeSecondary * 0.1f)
+            shaker.Shake(0.1f, 0.2f);
             secondaryChargeTime = Mathf.Clamp(secondaryChargeTime, 0f, maxChargeSecondary);
         }
         if (Input.GetMouseButtonUp(1)&& chargingSecondary)
