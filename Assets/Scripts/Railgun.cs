@@ -95,12 +95,12 @@ public class Railgun : Weapon
         int remainingBounce = primaryBounce;
         if (primaryBounce > 0)
         {
-            shaker.Shake(0.6f, 0.25f);
+            shaker.Shake(0.2f, 0.2f);
             atkTimer = atkCD * 2f;
         }
         else 
         {
-            shaker.Shake(0.4f, 0.25f);
+            shaker.Shake(0.15f, 0.2f);
             atkTimer = atkCD;
         }
 
@@ -140,7 +140,7 @@ public class Railgun : Weapon
 
     protected override void SecondaryFire() 
     {
-        shaker.Shake(0.4f, 0.15f);
+        shaker.Shake(0.2f, 0.1f);
         if (Physics.Raycast(firepoint.position, firepoint.forward, out RaycastHit wallHit, maxRange, reflectLayer))
         {
 

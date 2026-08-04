@@ -24,7 +24,7 @@ public class PlayerHP : MonoBehaviour, IDmgable
             Electrify(amount, electrifyTimer);
         }
         hp -= amount;
-        Debug.Log("you took " + amount + " dmg");
+        Debug.Log("you have " + hp + " left");
         if (hp <= 0)
             Die();
     }

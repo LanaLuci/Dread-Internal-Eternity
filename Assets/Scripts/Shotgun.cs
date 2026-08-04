@@ -113,7 +113,7 @@ public class Shotgun : Weapon
                 if (chargeStack > 3)
             {
                 bullet.ChargeUpBurn(1f, chargeStack - 1);
-                shaker.Shake(0.3f, 0.25f);
+                shaker.Shake(0.2f, 0.2f);
             }
 
         }
@@ -171,7 +171,7 @@ public class Shotgun : Weapon
             if (chargeStack > 3)
             {
                 bullet.ChargeUpBurn(1f, chargeStack - 1);
-                shaker.Shake(0.3f, 0.25f);
+                shaker.Shake(0.2f, 0.2f);
             }
         }
         atkTimer = atkCD + 0.5f * chargeStack;
@@ -181,7 +181,7 @@ public class Shotgun : Weapon
     protected virtual void BurstFire()
     {
         PlayAnim();
-        shaker.Shake(0.5f, 0.25f);
+        shaker.Shake(0.1f, 0.25f);
         leftBuffer = 0f;
         rightBuffer = 0f;
         for (int i = 0; i < bulletPerShot * 4; i++)
@@ -191,7 +191,10 @@ public class Shotgun : Weapon
             IncendiaryProjectile bullet = Instantiate(atkPrefab, firepoint.position, rotation).GetComponent<IncendiaryProjectile>();
             bullet.ChargeUpDmg(chargeStack);
             if (chargeStack > 3)
+            {
                 bullet.ChargeUpBurn(1f, chargeStack - 1);
+                shaker.Shake(0.2f, 0.2f);
+            }
         }
 
         playerMovement.Knockback(burstRecoil,0);
