@@ -19,10 +19,15 @@ public class Weapon : PickupAble
     [SerializeField] protected Animator animator;
     protected static int FireTrigger = Animator.StringToHash("Fire");
 
+    [Header("Audio")]
+    [SerializeField] protected AudioSource audioPlayer;
+
+
     protected override void Start()
     {
         base.Start();
         collider = GetComponentInChildren<BoxCollider>();
+
     }
 
     virtual protected void Update()

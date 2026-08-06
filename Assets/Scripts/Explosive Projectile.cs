@@ -1,8 +1,10 @@
 using UnityEngine;
 
+
 public class ExplosiveProjectile : PoProjectile
 {
     [SerializeField] protected float radius, power;
+    [SerializeField] protected GameObject explosionVFX;
 
 
     protected override void Start()
@@ -19,6 +21,9 @@ public class ExplosiveProjectile : PoProjectile
 
     protected override void OnCollisionEnter(Collision collision)
     {
+        VFX vfx = Instantiate(explosionVFX, transform.position, transform.rotation).GetComponent<VFX>();
+        vfx.radiusMax = radius;
+        
         Collider[] hits = Physics.OverlapSphere(transform.position, radius);
 
         foreach (var hit in hits)
@@ -44,4 +49,5 @@ public class ExplosiveProjectile : PoProjectile
         radius += amount;
 
     }
+
 }

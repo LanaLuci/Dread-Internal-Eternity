@@ -9,6 +9,12 @@ public class Pistol : Weapon
     private float  primaryChargeTime, secondaryChargeTime;
     private bool chargingPrimary = false, chargingSecondary = false;
 
+    [Header("Audio")]
+    [SerializeField] protected AudioSource chargingAudio;
+    [SerializeField] protected AudioClip fireSFX, grenadeSFX, chargingSFX;
+
+
+
 
 
     //DESCRIPTION: both modes can charge for enhancing effects, more dmg for bullet or more range for grenade
@@ -16,6 +22,8 @@ public class Pistol : Weapon
 
     protected override void PrimaryFire()
     {
+        audioPlayer.PlayOneShot(fireSFX);
+
         PistolBullet bullet = Instantiate(atkPrefab, firepoint.position, firepoint.rotation).GetComponent<PistolBullet>();
         bullet.ChargeUpDmg(Mathf.Lerp(0f, chargeUpDmgMax, primaryChargeTime / maxChargePrimary));
         if (primaryChargeTime >= maxChargePrimary/2f)
@@ -24,6 +32,7 @@ public class Pistol : Weapon
     }
 
     protected override void SecondaryFire() {
+        audioPlayer.PlayOneShot(grenadeSFX);
 
         ExplosiveProjectile grenade = Instantiate(grenadePrefab, firepoint.position, firepoint.rotation).GetComponent<ExplosiveProjectile>();
         grenade.ChargeUpRadius(Mathf.Lerp(0f, chargeUpRadiusMax, secondaryChargeTime / maxChargeSecondary));
@@ -45,6 +54,7 @@ public class Pistol : Weapon
         {
             primaryChargeTime = 0f;
             chargingPrimary = true;
+
             if (playerMovement.PlayerOnFloor)
             {
                 atkTimer = atkCD;
@@ -60,10 +70,16 @@ public class Pistol : Weapon
             if (primaryChargeTime > maxChargePrimary * 0.1f)
             shaker.Shake(0.1f, 0.2f);
             primaryChargeTime = Mathf.Clamp(primaryChargeTime, 0f, maxChargePrimary);
+            if (!chargingAudio.isPlaying)
+            {
+                chargingAudio.clip = chargingSFX;
+                chargingAudio.Play();
+            }
         }
         if (Input.GetMouseButtonUp(0) && chargingPrimary)
         {
             chargingPrimary = false;
+            chargingAudio.Stop();
             PrimaryFire();
         }
 
@@ -71,6 +87,7 @@ public class Pistol : Weapon
         {
             secondaryChargeTime = 0f;
             chargingSecondary = true;
+
             if (playerMovement.PlayerOnFloor)
             {
                 secondaryTimer = secondaryCD;
@@ -84,12 +101,17 @@ public class Pistol : Weapon
         {
             secondaryChargeTime += Time.deltaTime;
             if (secondaryChargeTime > maxChargeSecondary * 0.1f)
-            shaker.Shake(0.1f, 0.2f);
+                shaker.Shake(0.1f, 0.2f);
             secondaryChargeTime = Mathf.Clamp(secondaryChargeTime, 0f, maxChargeSecondary);
+            if (!chargingAudio.isPlaying) {
+                chargingAudio.clip = chargingSFX;
+                chargingAudio.Play(); 
+            }
         }
         if (Input.GetMouseButtonUp(1)&& chargingSecondary)
         {
             chargingSecondary = false;
+            chargingAudio.Stop();
             SecondaryFire();
         }
 

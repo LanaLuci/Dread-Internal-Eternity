@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 public class PlayerHP : MonoBehaviour, IDmgable
@@ -6,8 +7,7 @@ public class PlayerHP : MonoBehaviour, IDmgable
 
     [SerializeField] protected float maxHP, electrifyRadius;
     private float hp, electrifyTimer;
-    public float Player_HP => this.hp;
-    public float Player_MaxHP => this.maxHP;
+    public event Action<float, float> OnHPChanged;
     public bool electrified { get; private set; }
 
 
@@ -25,6 +25,7 @@ public class PlayerHP : MonoBehaviour, IDmgable
         }
         hp -= amount;
         Debug.Log("you have " + hp + " left");
+        OnHPChanged?.Invoke(hp, maxHP);
         if (hp <= 0)
             Die();
     }
@@ -33,6 +34,7 @@ public class PlayerHP : MonoBehaviour, IDmgable
         hp += amount;
         if (hp > maxHP)
             hp = maxHP;
+        OnHPChanged?.Invoke(hp, maxHP);
     }
     public void GetBurned(float amount, int stack)
     {
