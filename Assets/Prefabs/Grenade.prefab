@@ -79,6 +79,7 @@ MonoBehaviour:
   radius: 4
   power: 15
   explosionVFX: {fileID: 1747789665865422504, guid: 267a9999fda1ece4aa7d53ae910c7228, type: 3}
+  explosionSFX: {fileID: 8300000, guid: 53a4ef01c4dc4394084bc819a828c15c, type: 3}
 --- !u!1 &8278187949550715780
 GameObject:
   m_ObjectHideFlags: 0

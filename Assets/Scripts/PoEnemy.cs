@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 public class PoEnemy : MonoBehaviour, IDmgable
@@ -6,6 +7,7 @@ public class PoEnemy : MonoBehaviour, IDmgable
     [SerializeField] protected float maxHP, electrifyRadius;
     protected float hp;
     protected Rigidbody rb;
+    public event Action<PoEnemy> OnDeath;
 
 
     protected float electrifyTimer;
@@ -32,7 +34,10 @@ public class PoEnemy : MonoBehaviour, IDmgable
 
 
         if (hp <= 0)
+        {
+            OnDeath?.Invoke(this);
             Destroy(gameObject);
+        }
     }
     public virtual void GetHealed(float amount)
     {

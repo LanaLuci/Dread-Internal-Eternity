@@ -58,8 +58,9 @@ public class Railgun : Weapon
         {
             holdSecondaryTime += Time.deltaTime;
             
-            if (holdSecondaryTime >= maxHoldSecondary)
+            if (holdSecondaryTime > maxHoldSecondary)
             {
+                //overheated
                 holdingSecondary = false;
                 secondaryTimer = secondaryCD + 6f;
                 atkTimer = secondaryCD + 6f;

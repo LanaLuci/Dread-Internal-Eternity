@@ -20,10 +20,10 @@ public class VFX : MonoBehaviour
 
     IEnumerator Explode()
     {
-        while (transform.localScale.x < radiusMax)
+        while (transform.localScale.x < radiusMax * 2f)
         {
             transform.localScale += new Vector3(explosionSpd, explosionSpd, explosionSpd);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.03f);
         }
     }
 

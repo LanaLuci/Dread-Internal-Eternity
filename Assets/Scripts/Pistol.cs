@@ -67,14 +67,17 @@ public class Pistol : Weapon
         if (chargingPrimary)
         {
             primaryChargeTime += Time.deltaTime;
-            if (primaryChargeTime > maxChargePrimary * 0.1f)
-            shaker.Shake(0.1f, 0.2f);
-            primaryChargeTime = Mathf.Clamp(primaryChargeTime, 0f, maxChargePrimary);
-            if (!chargingAudio.isPlaying)
+            if (primaryChargeTime > maxChargePrimary * 0.2f)
             {
-                chargingAudio.clip = chargingSFX;
-                chargingAudio.Play();
+                shaker.Shake(0.1f, 0.2f);
+                if (!chargingAudio.isPlaying)
+                {
+                    chargingAudio.clip = chargingSFX;
+                    chargingAudio.Play();
+                }
             }
+            primaryChargeTime = Mathf.Clamp(primaryChargeTime, 0f, maxChargePrimary);
+
         }
         if (Input.GetMouseButtonUp(0) && chargingPrimary)
         {
@@ -100,13 +103,17 @@ public class Pistol : Weapon
         if (chargingSecondary)
         {
             secondaryChargeTime += Time.deltaTime;
-            if (secondaryChargeTime > maxChargeSecondary * 0.1f)
+            if (secondaryChargeTime > maxChargeSecondary * 0.2f)
+            {
                 shaker.Shake(0.1f, 0.2f);
-            secondaryChargeTime = Mathf.Clamp(secondaryChargeTime, 0f, maxChargeSecondary);
-            if (!chargingAudio.isPlaying) {
-                chargingAudio.clip = chargingSFX;
-                chargingAudio.Play(); 
+                if (!chargingAudio.isPlaying)
+                {
+                    chargingAudio.clip = chargingSFX;
+                    chargingAudio.Play();
+                }
             }
+            secondaryChargeTime = Mathf.Clamp(secondaryChargeTime, 0f, maxChargeSecondary);
+
         }
         if (Input.GetMouseButtonUp(1)&& chargingSecondary)
         {

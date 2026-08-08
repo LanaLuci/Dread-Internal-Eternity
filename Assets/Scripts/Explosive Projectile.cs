@@ -5,6 +5,7 @@ public class ExplosiveProjectile : PoProjectile
 {
     [SerializeField] protected float radius, power;
     [SerializeField] protected GameObject explosionVFX;
+    [SerializeField] protected AudioClip explosionSFX;
 
 
     protected override void Start()
@@ -23,7 +24,8 @@ public class ExplosiveProjectile : PoProjectile
     {
         VFX vfx = Instantiate(explosionVFX, transform.position, transform.rotation).GetComponent<VFX>();
         vfx.radiusMax = radius;
-        
+        AudioSource.PlayClipAtPoint(explosionSFX, transform.position);
+
         Collider[] hits = Physics.OverlapSphere(transform.position, radius);
 
         foreach (var hit in hits)

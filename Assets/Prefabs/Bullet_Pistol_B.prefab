@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0580698d79d16ac41803fdd5e26445bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spd: 35
+  spd: 40
   dmg: 2
   ricochet: 0
 --- !u!96 &9160377341780130909
