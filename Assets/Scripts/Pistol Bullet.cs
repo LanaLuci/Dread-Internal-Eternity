@@ -24,7 +24,7 @@ public class PistolBullet : PoProjectile
             {
                 Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider);
                 Transform ricochetTarget = null;
-                Collider[] colliders = Physics.OverlapSphere(this.transform.position, 10f);
+                Collider[] colliders = Physics.OverlapSphere(this.transform.position, 20f);
                 foreach (var collider in colliders) {
                     if (collider.transform.TryGetComponent<PoEnemy>(out PoEnemy enemy))
                     {
@@ -44,7 +44,7 @@ public class PistolBullet : PoProjectile
                     Debug.Log("TRY 2 DODGE THIS");
                     Vector3 dir = (ricochetTarget.position - this.transform.position).normalized;
                     this.transform.forward = dir;
-                    this.spd *= 1.75f;
+                    this.spd *= 2.25f;
                     rb.angularVelocity = Vector3.zero;
                     rb.linearVelocity = dir * this.spd;
 

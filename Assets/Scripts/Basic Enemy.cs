@@ -3,12 +3,12 @@ using System.Collections;
 
 public class BasicEnemy : PoEnemy
 {
-    [SerializeField] protected float detectionRange, attackRange, spd, attackCD, dmg;
-    [SerializeField] protected LayerMask blockLayer;
+    [Header("Melee Enemy Exclusive")]
     [SerializeField] protected GameObject atkVFX;
     [SerializeField] protected Transform firepoint;
     [SerializeField] protected Vector3 angleChange;
-    [SerializeField] protected Animator animator;
+    [SerializeField] protected float detectionRange, attackRange, spd, attackCD, dmg, attackDelay;
+
     protected static int AttackTrigger = Animator.StringToHash("Attack");
     protected Transform target;
     protected float attackTimer;
@@ -75,14 +75,31 @@ public class BasicEnemy : PoEnemy
     protected virtual IEnumerator AttackCoroutine(Vector3 dir)
     {
         attackTimer = attackCD;
-        animator.SetTrigger(AttackTrigger);
-        GameObject slashVFX = Instantiate(atkVFX, firepoint.position, firepoint.rotation);
-        slashVFX.transform.rotation *= Quaternion.Euler(angleChange);
-        yield return new WaitForSeconds(0.5f);
+
+
+
+        if (attackDelay > 0.5f)
+        {
+            yield return new WaitForSeconds(attackDelay - 0.5f);
+            GameObject slashVFX = Instantiate(atkVFX, firepoint.position, firepoint.rotation);
+            slashVFX.transform.rotation *= Quaternion.Euler(angleChange);
+            animator.SetTrigger(AttackTrigger);
+            yield return new WaitForSeconds(0.5f);
+
+        }
+        else
+        {
+            GameObject slashVFX = Instantiate(atkVFX, firepoint.position, firepoint.rotation);
+            slashVFX.transform.rotation *= Quaternion.Euler(angleChange);    
+            animator.SetTrigger(AttackTrigger);
+            yield return new WaitForSeconds(attackDelay);
+        }
+
         RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 2.5f, dir, attackRange);
         foreach (var hit in hits)
         {
-
+            if (hit.transform.root.CompareTag("Enemy"))
+                continue;
             IDmgable dmgable = hit.transform.GetComponentInParent<IDmgable>();
             if (dmgable != null && dmgable != this)
             {
@@ -92,6 +109,6 @@ public class BasicEnemy : PoEnemy
 
         }
 
-        Destroy(slashVFX);
+
     }
 }

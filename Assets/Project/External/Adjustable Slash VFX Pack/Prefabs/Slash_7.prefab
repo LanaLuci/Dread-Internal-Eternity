@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,7 +60,7 @@ VisualEffect:
       - m_Value: 1.8
         m_Name: SlashSpeed
         m_Overridden: 1
-      - m_Value: 0.4
+      - m_Value: 0.5
         m_Name: SlashLength
         m_Overridden: 1
       - m_Value: 2.5
@@ -84,13 +84,13 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 1, y: 1, z: 1, w: 1}
+      - m_Value: {x: 1, y: 0.18445155, z: 0, w: 1}
         m_Name: FirstColor
         m_Overridden: 1
       - m_Value: {x: 0.18689923, y: 0.2936208, z: 2.6415095, w: 1}
         m_Name: ThirdColor
         m_Overridden: 1
-      - m_Value: {x: 0.18689923, y: 0.2936208, z: 2.6415095, w: 1}
+      - m_Value: {x: 1, y: 0.18447503, z: 0, w: 1}
         m_Name: SecondColor
         m_Overridden: 1
       - m_Value: {x: 1, y: 1, z: 1, w: 0}
@@ -119,7 +119,7 @@ VisualEffect:
         m_Overridden: 1
     m_Bool:
       m_Array:
-      - m_Value: 1
+      - m_Value: 0
         m_Name: Spawn Particles
         m_Overridden: 1
       - m_Value: 1
@@ -146,8 +146,6 @@ VFXRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_StaticBatchInfo:
@@ -167,8 +165,6 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0

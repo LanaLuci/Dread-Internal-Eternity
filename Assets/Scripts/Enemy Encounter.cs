@@ -20,6 +20,7 @@ public class EnemyEncounter : MonoBehaviour
 
     
     [SerializeField] private EnemyWave[] waves;
+    [SerializeField] private GameObject arrivalVFX;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -42,7 +43,7 @@ public class EnemyEncounter : MonoBehaviour
     {
 
 
-        Debug.Log(currentWave);
+
 
         if (currentWave >= waves.Length)
         {
@@ -56,6 +57,7 @@ public class EnemyEncounter : MonoBehaviour
         foreach (EnemySpawn spawn in waves[currentWave].spawnlist) {
             if (spawn.spawned == null || spawn.spawnpoint == null)
                 continue;
+            Instantiate(arrivalVFX, spawn.spawnpoint.position, spawn.spawnpoint.rotation);
             PoEnemy enemySpawned = Instantiate(spawn.spawned, spawn.spawnpoint.position, spawn.spawnpoint.rotation).GetComponent<PoEnemy>();
             if (enemySpawned != null)
             {
@@ -73,7 +75,7 @@ public class EnemyEncounter : MonoBehaviour
         aliveEnemies--;
         if (aliveEnemies <= 0 && !spawning)
         {
-            currentWave++;
+            currentWave++;   
             StartCoroutine(NextWave(currentWave));
         }
     }

@@ -3534,7 +3534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &410087040
 Light:
   m_ObjectHideFlags: 0
@@ -7938,23 +7938,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - spawnlist:
-    - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
-      spawnpoint: {fileID: 668579499}
-    - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
-      spawnpoint: {fileID: 1277834731}
-    - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
+    - spawned: {fileID: 1762524251739426889, guid: dea3e32ce91888d43921ea3338e987f5, type: 3}
       spawnpoint: {fileID: 1815768662}
-    - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
+    - spawned: {fileID: 1762524251739426889, guid: dea3e32ce91888d43921ea3338e987f5, type: 3}
       spawnpoint: {fileID: 1203551502}
   - spawnlist:
     - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
       spawnpoint: {fileID: 668579499}
     - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
       spawnpoint: {fileID: 1277834731}
-    - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
+    - spawned: {fileID: 8963056637170022644, guid: 7aea2351527574c489d302c93dcf2bc6, type: 3}
       spawnpoint: {fileID: 1815768662}
-    - spawned: {fileID: 5936106071842601722, guid: 3ea9534862d359f4f8ff152ff284bea1, type: 3}
+    - spawned: {fileID: 8963056637170022644, guid: 7aea2351527574c489d302c93dcf2bc6, type: 3}
       spawnpoint: {fileID: 1203551502}
+  arrivalVFX: {fileID: 1554767307320501126, guid: e7e3c2d8e7633cd459bb1203067a7870, type: 3}
 --- !u!65 &811133836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11403,7 +11400,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 20
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -12104,7 +12101,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 40
+      scalar: 60
       minScalar: 10
       maxCurve:
         serializedVersion: 2

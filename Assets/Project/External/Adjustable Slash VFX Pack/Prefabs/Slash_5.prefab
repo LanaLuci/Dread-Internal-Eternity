@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,19 +81,19 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.109803975, y: 1.4980392, z: 0.07843135, w: 1}
+      - m_Value: {x: 2.670157, y: 0.5731751, z: 0, w: 1}
         m_Name: FirstColor
         m_Overridden: 1
-      - m_Value: {x: 0.61872566, y: 0.8113208, z: 0.049750824, w: 1}
+      - m_Value: {x: 1, y: 0.2086961, z: 0, w: 1}
         m_Name: ThirdColor
         m_Overridden: 1
-      - m_Value: {x: 1.4980394, y: 1.4980394, z: 1.4980394, w: 1}
+      - m_Value: {x: 2.0000002, y: 0.29374233, z: 0, w: 1}
         m_Name: SecondColor
         m_Overridden: 1
       - m_Value: {x: 1, y: 1, z: 1, w: 0}
         m_Name: FresnelColor
         m_Overridden: 1
-      - m_Value: {x: 2.6301725, y: 9.140928, z: 2.6301725, w: 1}
+      - m_Value: {x: 12.203857, y: 0.096232735, z: 0, w: 1}
         m_Name: Fresnel Color
         m_Overridden: 1
     m_Uint:
@@ -116,7 +116,7 @@ VisualEffect:
         m_Overridden: 1
     m_Bool:
       m_Array:
-      - m_Value: 1
+      - m_Value: 0
         m_Name: Spawn Particles
         m_Overridden: 1
       - m_Value: 1
@@ -143,8 +143,6 @@ VFXRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_StaticBatchInfo:
@@ -164,8 +162,6 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0

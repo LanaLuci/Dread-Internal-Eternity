@@ -4,7 +4,11 @@ using System.Collections;
 
 public class PoEnemy : MonoBehaviour, IDmgable
 {
+    [Header("Generic")]
+    [SerializeField] protected LayerMask blockLayer;
     [SerializeField] protected float maxHP, electrifyRadius;
+    [SerializeField] protected Animator animator;
+
     protected float hp;
     protected Rigidbody rb;
     public event Action<PoEnemy> OnDeath;
