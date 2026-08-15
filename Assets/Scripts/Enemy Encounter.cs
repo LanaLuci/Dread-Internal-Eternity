@@ -18,9 +18,13 @@ public class EnemyEncounter : MonoBehaviour
     private int currentWave, aliveEnemies;
     private bool cleared = false, combat =  false, spawning = false;
 
-    
+    [Header("Enemies")]
     [SerializeField] private EnemyWave[] waves;
+    [Header("Doors")]
+    [SerializeField] private Door[] doors;
+    [Header("SFX and VFX")]
     [SerializeField] private GameObject arrivalVFX;
+    [SerializeField] private AudioClip arrivalSFX;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,6 +41,10 @@ public class EnemyEncounter : MonoBehaviour
     {
         currentWave = 0;
         StartCoroutine(NextWave(currentWave));
+        foreach (Door door in doors)
+        {
+            door.DoorLock();
+        }
     }
 
     private IEnumerator NextWave(int currentWave)
@@ -49,6 +57,10 @@ public class EnemyEncounter : MonoBehaviour
         {
             combat = false;
             cleared = true;
+            foreach (Door door in doors)
+            {
+                door.DoorUnlock();
+            }
             yield break;
         }
         spawning = true;
@@ -57,7 +69,10 @@ public class EnemyEncounter : MonoBehaviour
         foreach (EnemySpawn spawn in waves[currentWave].spawnlist) {
             if (spawn.spawned == null || spawn.spawnpoint == null)
                 continue;
+            if (arrivalVFX != null)
             Instantiate(arrivalVFX, spawn.spawnpoint.position, spawn.spawnpoint.rotation);
+            if (arrivalSFX != null)
+            AudioSource.PlayClipAtPoint(arrivalSFX, spawn.spawnpoint.position);
             PoEnemy enemySpawned = Instantiate(spawn.spawned, spawn.spawnpoint.position, spawn.spawnpoint.rotation).GetComponent<PoEnemy>();
             if (enemySpawned != null)
             {

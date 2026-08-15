@@ -3914,12 +3914,13 @@ MonoBehaviour:
   secondaryCD: 0
   visual: {fileID: 1990223665}
   atkPrefab: {fileID: 596347763104157635, guid: 12fae2cec1f216d40a5064a4e1403022, type: 3}
+  arsenalID: 1
   animator: {fileID: 2125815931}
   audioPlayer: {fileID: 419601859}
   chargeStackMax: 5
   bulletPerShot: 5
   spreadAngle: 90
-  burstRecoil: 60
+  burstRecoil: 10
 --- !u!82 &419601859
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7951,7 +7952,10 @@ MonoBehaviour:
       spawnpoint: {fileID: 1815768662}
     - spawned: {fileID: 8963056637170022644, guid: 7aea2351527574c489d302c93dcf2bc6, type: 3}
       spawnpoint: {fileID: 1203551502}
+  doors:
+  - {fileID: 468410263}
   arrivalVFX: {fileID: 1554767307320501126, guid: e7e3c2d8e7633cd459bb1203067a7870, type: 3}
+  arrivalSFX: {fileID: 8300000, guid: 3f284c77805f6674995bbdfd8969a87d, type: 3}
 --- !u!65 &811133836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8174,12 +8178,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45f0f9f85219774093d797dc4b34ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spd: 5
+  spd: 15
   dash_spd: 40
   jumpForce: 8
   maxStamina: 100
   crouch_spd: 2
   slamForce: 30
+  accel: 30
+  decel: 5
   camPos: {fileID: 460385386}
   wallJumpMax: 2
   floorLayer:
@@ -16604,6 +16610,7 @@ MonoBehaviour:
   secondaryCD: 1
   visual: {fileID: 2113613350}
   atkPrefab: {fileID: 4937992170545118315, guid: 1eb476c8396b9934fa7a893668b9e8aa, type: 3}
+  arsenalID: 0
   animator: {fileID: 298688768}
   audioPlayer: {fileID: 1297179015}
   grenadePrefab: {fileID: 683999176418995158, guid: 8986527768d95b8418f7eaa53ce7358e, type: 3}
@@ -22130,9 +22137,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firepoint: {fileID: 1655265893}
   atkCD: 5.5
-  secondaryCD: 12
+  secondaryCD: 10
   visual: {fileID: 1493928448}
   atkPrefab: {fileID: 3990771548903629792, guid: ec0299cdd668b9c4f8101bcde960207f, type: 3}
+  arsenalID: 2
   animator: {fileID: 2147010102}
   audioPlayer: {fileID: 1849244090}
   reflectLayer:
@@ -22143,7 +22151,7 @@ MonoBehaviour:
   secondaryDmgHold: 2
   maxHoldSecondary: 3
   maxRange: 30
-  holdRecoil: 5
+  holdRecoil: 2
 --- !u!82 &1849244090
 AudioSource:
   m_ObjectHideFlags: 0

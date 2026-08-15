@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
     [SerializeField] private Transform[] doorPartOpenState;
     [SerializeField] private Transform[] doorPartCloseState;
     [SerializeField] private float spd;
+    private bool locked = false;
     private bool isOpen;
     
 
@@ -20,6 +21,8 @@ public class Door : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (locked)
+            return;
         float dist = Vector3.Distance(this.transform.position, player.transform.position);
         if (dist < 6f)
         {
@@ -37,5 +40,26 @@ public class Door : MonoBehaviour
             doorParts[i].transform.position = Vector3.MoveTowards(doorParts[i].transform.position,target.position,spd * Time.deltaTime);
         }
 
+    }
+
+    public void DoorLock()
+    {
+        if (!locked)
+        {
+            locked = true;
+            for (int i = 0; i < doorParts.Length; i++)
+            {
+                Transform target = doorPartCloseState[i];
+
+                doorParts[i].transform.position = target.position;
+            }
+        }
+
+    }
+
+    public void DoorUnlock()
+    {
+        if (locked)
+            locked = false;
     }
 }

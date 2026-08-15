@@ -198,6 +198,7 @@ public class Shotgun : Weapon
         }
 
         playerMovement.Knockback(burstRecoil,0);
+
         atkTimer = atkCD *2f + 0.5f * chargeStack;
         chargeStack = 0;
     }

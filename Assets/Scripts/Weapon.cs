@@ -6,6 +6,7 @@ public class Weapon : PickupAble
     [SerializeField] protected Transform firepoint;
     [SerializeField] protected float atkCD, secondaryCD;
     [SerializeField] protected GameObject visual, atkPrefab;
+    [SerializeField] protected int arsenalID;
 
     protected float atkTimer, secondaryTimer; 
     protected PlayerMovement playerMovement;
@@ -77,7 +78,7 @@ public class Weapon : PickupAble
         playerMovement = holdPoint.GetComponentInParent<PlayerMovement>();
         playerPickup = holdPoint.GetComponentInParent<PlayerPickUp>();
         shaker = GetComponentInChildren<Shaker>();
-        playerPickup.NewWeaponHandle(this);
+        playerPickup.NewWeaponHandle(this, this.arsenalID);
     }
 
     public override void Drop()

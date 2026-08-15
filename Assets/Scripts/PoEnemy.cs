@@ -39,8 +39,7 @@ public class PoEnemy : MonoBehaviour, IDmgable
 
         if (hp <= 0)
         {
-            OnDeath?.Invoke(this);
-            Destroy(gameObject);
+            Die();
         }
     }
     public virtual void GetHealed(float amount)
@@ -103,5 +102,11 @@ public class PoEnemy : MonoBehaviour, IDmgable
                 }
             }
         } 
+    }
+
+    protected virtual void Die()
+    {
+        OnDeath?.Invoke(this);
+        Destroy(gameObject);
     }
 }

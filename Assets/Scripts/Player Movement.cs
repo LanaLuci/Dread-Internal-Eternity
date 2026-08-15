@@ -4,14 +4,15 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
     private CapsuleCollider col;
-    [SerializeField] private float spd, dash_spd, jumpForce, maxStamina, crouch_spd, slamForce;
+    [SerializeField] private float spd, dash_spd, jumpForce, maxStamina, crouch_spd, slamForce, accel, decel;
     [SerializeField] private Transform camPos;
     [SerializeField] private int wallJumpMax;
     private float camHeight, stand_height;
-    private float stamina, chargedJumpWindow, slamDelay, dashWindow;
+    private float stamina, chargedJumpWindow, slamDelay, dashWindow, slamForceStorage;
     public float PlayerStamina => stamina;
     public float PlayerMaxStamina => maxStamina;
-    private bool dashable, crouching, slamming;
+    private bool dashable, crouching, slamming, cancelMomentum;
+
     private int wallJump;
     private Vector3 wallNormal, knockbackVelocity;
 
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         stamina = maxStamina;
         chargedJumpWindow = slamDelay = dashWindow = 0;
         slamming = false;
+        cancelMomentum  = false;
 
     }
     
@@ -64,9 +66,11 @@ public class PlayerMovement : MonoBehaviour
             if (onFloor)
             {
                 slamDelay = 0.2f;
+
                 if (chargedJumpWindow > 0f)
                 {
-                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce * 1.5f, rb.linearVelocity.z);
+                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce * slamForceStorage, rb.linearVelocity.z);
+
                     chargedJumpWindow = 0f;
                 }
                 else
@@ -75,14 +79,16 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 onFloor = false;
-                
+                slamForceStorage = 1f;
+
 
             }
             else if (onWall && wallJump > 0)
             {
                 wallJump--;
                 rb.linearVelocity = Vector3.up * jumpForce;
-                Knockback(20f, 1);
+                Knockback(5f, 1);
+                slamForceStorage = 1f;
 
             }
 
@@ -90,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             chargedJumpWindow = 0.2f;
+
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -134,13 +141,30 @@ public class PlayerMovement : MonoBehaviour
             slamDelay -= Time.deltaTime;
 
         if (dashWindow > 0)
+        {
             dashWindow -= Time.deltaTime;
+            if (dashWindow<= 0)
+            {
+                cancelMomentum = true;
+            }
+        }
+
+        if (slamming)
+        {
+            slamForceStorage = Mathf.Lerp(slamForceStorage, 2f, Time.deltaTime * 10f);
+
+        }
 
         if (knockbackVelocity.sqrMagnitude > 0)
-            knockbackVelocity = Vector3.Lerp(knockbackVelocity, Vector3.zero, Time.deltaTime * 10f);
+        {
+            cancelMomentum = true;
+            knockbackVelocity = Vector3.MoveTowards(knockbackVelocity, Vector3.zero, Time.deltaTime * 10f);
+
+        }
 
         Vector3 move = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
         Vector3 dashDir;
+        float rate = (move.sqrMagnitude > 0) ? accel : decel;
         if (move.sqrMagnitude == 0)
         {
             dashDir = camPos.forward;
@@ -148,10 +172,19 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             dashDir = move;
+
+        }
+        Vector3 desiredVelocity = crouching ? (move * crouch_spd) : (move * spd);
+
+        Vector3 currentVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        if (cancelMomentum)
+        {
+            currentVelocity = Vector3.zero;
+            cancelMomentum = false;
         }
 
 
-            if (stamina < maxStamina)
+        if (stamina < maxStamina)
             stamina += Time.deltaTime * 3f;
         if (dashWindow > 0)
         {
@@ -162,18 +195,12 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+
         }
         else
         {
-
-            if (crouching)
-            {
-                rb.linearVelocity = new Vector3(move.x * crouch_spd + knockbackVelocity.x, rb.linearVelocity.y + knockbackVelocity.y, move.z * crouch_spd + knockbackVelocity.z);
-            }
-            else
-            {
-                rb.linearVelocity = new Vector3(move.x * spd + knockbackVelocity.x, rb.linearVelocity.y + knockbackVelocity.y, move.z * spd + knockbackVelocity.z);
-            }
+            Vector3 horizontalVelocity = Vector3.MoveTowards(currentVelocity, desiredVelocity, rate * Time.deltaTime) + knockbackVelocity;
+            rb.linearVelocity = new Vector3(horizontalVelocity.x, rb.linearVelocity.y + knockbackVelocity.y, horizontalVelocity.z);
 
         }
 
@@ -230,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
         {
             knockbackVelocity = wallNormal * power;
         }
+
     }
 
 

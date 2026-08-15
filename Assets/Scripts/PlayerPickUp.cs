@@ -30,6 +30,7 @@ public class PlayerPickUp : MonoBehaviour
             {
                 currentPickup.GetComponent<Weapon>().Unequip();
                 currentPickup = null;
+                weaponID--;
             }
             else
             {
@@ -44,64 +45,44 @@ public class PlayerPickUp : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                if (weaponID <0)
-                {
-                    weaponID = 0;
-                }
-                else
-                {
-                    weaponID++;
-                    if (weaponID > arsenal.Length -1)
-                    {
-                        weaponID = 0;
-                    }
-                }
-                Weapon currentWeapon;
-                if (currentPickup != null)
-                {
-                    currentWeapon = currentPickup.GetComponent<Weapon>();
-                    if (currentWeapon == null)
-                    {
-                        currentPickup.Drop();
-                    }
-                    else
-                    {
-                        currentWeapon.Unequip();
-                    }
-                }
-
-
-                while (arsenal[weaponID] == null)
-                {
-                    weaponID++;
-                    if (weaponID > arsenal.Length - 1)
-                    {
-                        weaponID = 0;
-                    }
-                }
-                currentPickup = arsenal[weaponID];
-                currentWeapon = currentPickup.GetComponent<Weapon>();
-                currentWeapon.Equip();
+                CycleNextWeapon();
             }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                EquipWeaponSlot(0);
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+                EquipWeaponSlot(1);
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+                EquipWeaponSlot(2);
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+                EquipWeaponSlot(3);
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+                EquipWeaponSlot(4);
         }
     }
 
-    public void NewWeaponHandle(Weapon newWeapon)
+    public void NewWeaponHandle(Weapon newWeapon, int id = 0)
     {
+        if (newWeapon == null)
+            return;
         for (int i = 0; i < arsenal.Length; i++) {
             if (arsenal[i] == newWeapon) {
                 return;
             }
         }
-        for (int i = 0; i < arsenal.Length;i++)
-        {
-            if (arsenal[i] == null)
+
+            if (arsenal[id] != null)
             {
-                arsenal[i] = newWeapon;
-                arsenal[i].Equip();
-                return;
+                arsenal[id].Drop();
+            currentPickup = null;
+
             }
-        }
+        arsenal[id] = newWeapon;
+        arsenal[id].Equip();
+        weaponID = id;
+        currentPickup = arsenal[weaponID];
+        return;
+
     }
 
     private bool WeaponReady()
@@ -115,5 +96,57 @@ public class PlayerPickUp : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void CycleNextWeapon()
+    {
+        if (weaponID < 0)
+        {
+            weaponID = 0;
+        }
+        else
+        {
+            weaponID++;
+            if (weaponID > arsenal.Length - 1)
+            {
+                weaponID = 0;
+            }
+        }
+        while (arsenal[weaponID] == null)
+        {
+            weaponID++;
+            if (weaponID > arsenal.Length - 1)
+            {
+                weaponID = 0;
+            }
+        }
+        EquipWeaponSlot(weaponID);
+
+
+    }
+
+    private void EquipWeaponSlot(int slot)
+    {
+        if (slot < 0 || slot > arsenal.Length)
+            return;
+        if (arsenal[slot] == null)
+            return;
+        Weapon currentWeapon;
+        if (currentPickup != null)
+        {
+            currentWeapon = currentPickup.GetComponent<Weapon>();
+            if (currentWeapon == null)
+            {
+                currentPickup.Drop();
+            }
+            else
+            {
+                currentWeapon.Unequip();
+            }
+        }
+        currentPickup = arsenal[slot];
+        currentWeapon = currentPickup.GetComponent<Weapon>();
+        currentWeapon.Equip();
+        weaponID = slot;
     }
 }
