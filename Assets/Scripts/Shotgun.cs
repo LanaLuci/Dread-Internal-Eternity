@@ -8,6 +8,8 @@ public class Shotgun : Weapon
     [SerializeField] private float spreadAngle, burstRecoil;
     private int chargeStack;
     private float leftBuffer, rightBuffer;
+    [Header("Audio")]
+    [SerializeField] private AudioClip shotSFX;
 
     //DESCRIPTION: both modes share CD, press both for burst, F to stack dmg, more stack more dmg + longer CD
     //burn target at stack 4 or 5, crouch or dash can manipulate bullet count and angle
@@ -62,6 +64,7 @@ public class Shotgun : Weapon
     protected override void PrimaryFire()
     {
         PlayAnim();
+        audioPlayer.PlayOneShot(shotSFX);
         //average angle between 2 bullets
         float step;
         if (bulletPerShot > 1)
@@ -124,6 +127,7 @@ public class Shotgun : Weapon
     protected override void SecondaryFire()
     {
         PlayAnim();
+        audioPlayer.PlayOneShot(shotSFX);
         float step;
         if (bulletPerShot>1)
         {
@@ -181,6 +185,7 @@ public class Shotgun : Weapon
     protected virtual void BurstFire()
     {
         PlayAnim();
+        audioPlayer.PlayOneShot(shotSFX);
         shaker.Shake(0.1f, 0.25f);
         leftBuffer = 0f;
         rightBuffer = 0f;

@@ -10,6 +10,9 @@ public class Railgun : Weapon
 
     protected bool holdingSecondary = false;
     protected int primaryBounce;
+    [Header("Audio")]
+    [SerializeField] private AudioSource holdAudio;
+    [SerializeField] private AudioClip shotSFX, holdSFX;
 
     //DESCRIPTION: both modes have long CD but can reload even while not equipped, F to toggle bounce mode for primary fire, bounce mode gives longer CD
     //secondary fire can hold for sustaining dmg, the longer the hold the longer the CD, interrupt the sustaining beam with primary fire to electrify targets
@@ -34,18 +37,21 @@ public class Railgun : Weapon
 
         if (!equipped)
             return;
-        if (Input.GetMouseButtonDown(0) && !(atkTimer>0))
+
+        if (Input.GetMouseButtonDown(0))
         {
-            //although using same input, interrupt fire counts as part of the secondary fire
-            if (!holdingSecondary)
+
+            if (!holdingSecondary && !(atkTimer > 0))
             {
 
                 PrimaryFire();
             }
-            else
+            else if (holdingSecondary)
             {
+                //although using same input, interrupt fire counts as part of the secondary fire
                 InterruptFire();
             }
+
         }
         if (Input.GetMouseButtonDown(1) && !(secondaryTimer > 0) && !holdingSecondary)
         {
@@ -62,6 +68,7 @@ public class Railgun : Weapon
             {
                 //overheated
                 holdingSecondary = false;
+                holdAudio.Stop();
                 secondaryTimer = secondaryCD + 6f;
                 atkTimer = secondaryCD + 6f;
                 
@@ -71,6 +78,7 @@ public class Railgun : Weapon
         if (Input.GetMouseButtonUp(1) && holdingSecondary)
         {
             holdingSecondary = false;
+            holdAudio.Stop();
             secondaryTimer = secondaryCD + Mathf.Lerp(0f, 4f, holdSecondaryTime / maxHoldSecondary);
         }
 
@@ -90,6 +98,7 @@ public class Railgun : Weapon
     protected override void PrimaryFire()
     {
         PlayAnim();
+        audioPlayer.PlayOneShot(shotSFX);
         Vector3 start, dir;
         start = firepoint.position;
         dir = firepoint.forward;
@@ -142,6 +151,7 @@ public class Railgun : Weapon
     protected override void SecondaryFire() 
     {
         shaker.Shake(0.2f, 0.1f);
+
         if (Physics.Raycast(firepoint.position, firepoint.forward, out RaycastHit wallHit, maxRange, reflectLayer))
         {
 
@@ -164,9 +174,13 @@ public class Railgun : Weapon
 
     protected virtual void InterruptFire()
     {
+        holdAudio.Stop();
+        audioPlayer.PlayOneShot(shotSFX);
+        PlayAnim();
         //not resetting the CD for primary, allow a primary shot to follow to exploit the electrify effect on targets
         //affected by bounce mode toggle
         holdingSecondary = false;
+
         secondaryTimer = secondaryCD + Mathf.Lerp(0f, 4f, holdSecondaryTime / maxHoldSecondary);
         Vector3 start, dir;
         start = firepoint.position;
@@ -217,6 +231,11 @@ public class Railgun : Weapon
 
                 StartCoroutine(BeamRender(firepoint.position, wallHit.point, 2f));
                 shaker.Shake(0.1f, 0.15f);
+                if (!holdAudio.isPlaying)
+                {
+                    holdAudio.clip = holdSFX;
+                    holdAudio.Play();
+                }
 
 
                 RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 1f, firepoint.forward, wallHit.distance);

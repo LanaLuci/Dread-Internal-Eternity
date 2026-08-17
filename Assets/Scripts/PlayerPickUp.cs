@@ -2,43 +2,80 @@ using UnityEngine;
 
 public class PlayerPickUp : MonoBehaviour
 {
-    [SerializeField] private Transform raycastStart, pickupHoldPoint;
+    [SerializeField] private Transform raycastStart, pickupRightHand, pickupLeftHand;
     [SerializeField] private float pickupRange;
     [SerializeField] private LayerMask pickupLayer;
     [SerializeField] private Weapon[] arsenal = new Weapon[5];
+    [SerializeField] private MeleeWeapon[] storage = new MeleeWeapon[3];
     private int weaponID = -1;
-    private PickupAble currentPickup;
+    private int storageID = -1;
+    private PickupAble currentRightHandPickup, currentLeftHandPickup;
 
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (currentPickup == null)
+            if (currentRightHandPickup == null) //prioritize picking up with right hand
             {
 
                 if (Physics.Raycast(raycastStart.position, raycastStart.TransformDirection(Vector3.forward), out RaycastHit hit, pickupRange, pickupLayer))
                 {
-                    currentPickup = hit.transform.GetComponent<PickupAble>();
-                    if (currentPickup != null)
+                    currentRightHandPickup = hit.transform.GetComponent<PickupAble>();
+                    if (currentRightHandPickup != null && currentRightHandPickup.transform.GetComponent<MeleeWeapon>() == null)
                     {
-                        currentPickup.Grab(pickupHoldPoint);
+                        currentRightHandPickup.Grab(pickupRightHand);
                     }
                 }
             }
-            else if (currentPickup.GetComponent<Weapon>() != null)
+            else if (currentLeftHandPickup == null) //prioritize picking up over equip/unequip/drop
             {
-                currentPickup.GetComponent<Weapon>().Unequip();
-                currentPickup = null;
-                weaponID--;
-            }
-            else
-            {
+                if (Physics.Raycast(raycastStart.position, raycastStart.TransformDirection(Vector3.forward), out RaycastHit hit, pickupRange, pickupLayer))
+                {
+                    currentLeftHandPickup = hit.transform.GetComponent<PickupAble>();
+                    if (currentLeftHandPickup != null && currentLeftHandPickup.transform.GetComponent<Weapon>() == null)
+                    {
+                        currentLeftHandPickup.Grab(pickupLeftHand);
+                    }
+                }
+                else
+                {
+                    Weapon righthand = currentRightHandPickup.GetComponent<Weapon>();
+                    if (righthand != null)
+                    {
+                        righthand.Unequip();
+                        currentRightHandPickup = null;
+                        weaponID--;
+                    }
+                    else
+                    {
 
-                currentPickup.Drop();
-                currentPickup = null;
+                        currentRightHandPickup.Drop();
+                        currentRightHandPickup = null;
+                    }
+                }
             }
-            
+            else if (currentRightHandPickup.GetComponent<Weapon>() == null) //prioritize drop item in right hand for weapon
+            {
+                currentRightHandPickup.Drop();
+                currentRightHandPickup = null;
+            }
+            else if (currentLeftHandPickup.GetComponent<MeleeWeapon>() == null) //prioritize drop item in left hand
+            {
+                currentLeftHandPickup.Drop();
+                currentLeftHandPickup = null;
+
+            }
+            else if (currentLeftHandPickup.GetComponent<MeleeWeapon>() != null) //prioritize unequip melee
+            {
+                currentLeftHandPickup.GetComponent<MeleeWeapon>().Unequip();
+                currentLeftHandPickup = null;
+                storageID--;
+            }
+
+
+
+
         }
  
         if (WeaponReady())
@@ -58,6 +95,21 @@ public class PlayerPickUp : MonoBehaviour
                 EquipWeaponSlot(3);
             else if (Input.GetKeyDown(KeyCode.Alpha5))
                 EquipWeaponSlot(4);
+            
+        }
+
+        if (MeleeReady())
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                CycleNextMelee();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+                EquipMeleeSlot(0);
+            else if (Input.GetKeyDown(KeyCode.Alpha7))
+                EquipMeleeSlot(1);
+            else if (Input.GetKeyDown(KeyCode.Alpha8))
+                EquipMeleeSlot(2);
         }
     }
 
@@ -73,14 +125,41 @@ public class PlayerPickUp : MonoBehaviour
 
             if (arsenal[id] != null)
             {
+            //drop the weapon for its alternative that shares same slot (for later weapon expansion)
                 arsenal[id].Drop();
-            currentPickup = null;
+            currentRightHandPickup = null;
 
             }
         arsenal[id] = newWeapon;
         arsenal[id].Equip();
         weaponID = id;
-        currentPickup = arsenal[weaponID];
+        currentRightHandPickup = arsenal[weaponID];
+        return;
+
+    }
+
+    public void NewMeleeHandle(MeleeWeapon newMelee, int id = 0)
+    {
+
+        if (newMelee == null)
+            return;
+        for (int i = 0; i < storage.Length; i++) {
+            if (storage[i] == newMelee) {
+                return;
+            }
+        }
+
+            if (storage[id] != null)
+            {
+
+                storage[id].Drop();
+            currentLeftHandPickup = null;
+
+            }
+        storage[id] = newMelee;
+        storage[id].Equip();
+        storageID = id;
+        currentLeftHandPickup = storage[storageID];
         return;
 
     }
@@ -90,6 +169,19 @@ public class PlayerPickUp : MonoBehaviour
         for (int i = 0; i < arsenal.Length; i++)
         {
             if (arsenal[i] != null)
+            {
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool MeleeReady()
+    {
+        for (int i = 0; i < storage.Length; i++)
+        {
+            if (storage[i] != null)
             {
 
                 return true;
@@ -125,28 +217,80 @@ public class PlayerPickUp : MonoBehaviour
 
     }
 
+    private void CycleNextMelee()
+    {
+        if (storageID < 0)
+        {
+            storageID = 0;
+        }
+        else
+        {
+            storageID++;
+            if (storageID > storage.Length - 1)
+            {
+                storageID = 0;
+            }
+        }
+        while (storage[storageID] == null)
+        {
+            storageID++;
+            if (storageID > storage.Length - 1)
+            {
+                storageID = 0;
+            }
+        }
+        EquipMeleeSlot(storageID);
+
+
+    }
+
     private void EquipWeaponSlot(int slot)
     {
-        if (slot < 0 || slot > arsenal.Length)
+        if (slot < 0 || slot >= arsenal.Length)
             return;
         if (arsenal[slot] == null)
             return;
         Weapon currentWeapon;
-        if (currentPickup != null)
+        if (currentRightHandPickup != null)
         {
-            currentWeapon = currentPickup.GetComponent<Weapon>();
+            currentWeapon = currentRightHandPickup.GetComponent<Weapon>();
             if (currentWeapon == null)
             {
-                currentPickup.Drop();
+                currentRightHandPickup.Drop();
             }
             else
             {
                 currentWeapon.Unequip();
             }
         }
-        currentPickup = arsenal[slot];
-        currentWeapon = currentPickup.GetComponent<Weapon>();
+        currentRightHandPickup = arsenal[slot];
+        currentWeapon = currentRightHandPickup.GetComponent<Weapon>();
         currentWeapon.Equip();
         weaponID = slot;
+    }
+
+    private void EquipMeleeSlot(int slot)
+    {
+        if (slot < 0 || slot >= storage.Length)
+            return;
+        if (storage[slot] == null)
+            return;
+        MeleeWeapon currentMelee;
+        if (currentLeftHandPickup != null)
+        {
+            currentMelee = currentLeftHandPickup.GetComponent<MeleeWeapon>();
+            if (currentMelee == null)
+            {
+                currentLeftHandPickup.Drop();
+            }
+            else
+            {
+                currentMelee.Unequip();
+            }
+        }
+        currentLeftHandPickup = storage[slot];
+        currentMelee = currentLeftHandPickup.GetComponent<MeleeWeapon>();
+        currentMelee.Equip();
+        storageID = slot;
     }
 }
