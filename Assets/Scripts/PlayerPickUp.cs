@@ -22,10 +22,40 @@ public class PlayerPickUp : MonoBehaviour
                 if (Physics.Raycast(raycastStart.position, raycastStart.TransformDirection(Vector3.forward), out RaycastHit hit, pickupRange, pickupLayer))
                 {
                     currentRightHandPickup = hit.transform.GetComponent<PickupAble>();
-                    if (currentRightHandPickup != null && currentRightHandPickup.transform.GetComponent<MeleeWeapon>() == null)
+
+                    if (currentRightHandPickup != null)
                     {
-                        currentRightHandPickup.Grab(pickupRightHand);
+                        if (currentRightHandPickup.transform.GetComponent<MeleeWeapon>() == null)
+                        {
+                            currentRightHandPickup.Grab(pickupRightHand);
+                        }
+                        else
+                        {
+                            currentLeftHandPickup = currentRightHandPickup; //melee will get auto-switched to left hand
+                            currentLeftHandPickup.Grab(pickupLeftHand);
+                            currentRightHandPickup = null;
+                        }
+
                     }
+                }
+                else
+                {
+                    if (currentLeftHandPickup != null)
+                    {
+                        if (currentLeftHandPickup.TryGetComponent<MeleeWeapon>(out MeleeWeapon lefthand))
+                        {
+                            lefthand.Unequip();
+                            currentLeftHandPickup = null;
+                            storageID--;
+                        }
+                        else
+                        {
+                            currentLeftHandPickup.Drop();
+                            currentLeftHandPickup = null;
+                        }
+
+                    }
+
                 }
             }
             else if (currentLeftHandPickup == null) //prioritize picking up over equip/unequip/drop
@@ -37,21 +67,27 @@ public class PlayerPickUp : MonoBehaviour
                     {
                         currentLeftHandPickup.Grab(pickupLeftHand);
                     }
+                    else
+                    {
+                        currentLeftHandPickup = null;
+                    }
                 }
                 else
                 {
-                    Weapon righthand = currentRightHandPickup.GetComponent<Weapon>();
-                    if (righthand != null)
+                    if (currentRightHandPickup != null)
                     {
-                        righthand.Unequip();
-                        currentRightHandPickup = null;
-                        weaponID--;
-                    }
-                    else
-                    {
+                        if (currentRightHandPickup.TryGetComponent<Weapon>(out Weapon righthand))
+                        {
+                            righthand.Unequip();
+                            currentRightHandPickup = null;
+                            weaponID--;
+                        }
+                        else
+                        {
+                            currentRightHandPickup.Drop();
+                            currentRightHandPickup = null;
+                        }
 
-                        currentRightHandPickup.Drop();
-                        currentRightHandPickup = null;
                     }
                 }
             }

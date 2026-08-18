@@ -12,7 +12,7 @@ public class MeleeWeapon : PickupAble
     protected PlayerPickUp playerPickup;
 
 
-    protected BoxCollider collider;
+
     protected bool equipped;
 
     [Header("Animation")]
@@ -23,12 +23,6 @@ public class MeleeWeapon : PickupAble
     [SerializeField] protected AudioSource audioPlayer;
 
 
-    protected override void Start()
-    {
-        base.Start();
-        collider = GetComponentInChildren<BoxCollider>();
-
-    }
 
     virtual protected void Update()
     {
@@ -69,8 +63,8 @@ public class MeleeWeapon : PickupAble
         base.Drop();
         playerMovement = null;
         playerPickup = null;
-        this.collider.gameObject.SetActive(true);
-        this.transform.SetParent(null);
+
+
     }
 
     public virtual void Equip()
@@ -78,9 +72,9 @@ public class MeleeWeapon : PickupAble
 
         this.equipped = true;
         this.visual.SetActive(true);
-        this.transform.SetParent(holdPos);
 
-        this.collider.gameObject.SetActive(false);
+
+
     }
 
     public virtual void Unequip()

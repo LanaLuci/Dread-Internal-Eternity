@@ -4,11 +4,12 @@ public class PickupAble : MonoBehaviour
 {
     protected Transform holdPos;
     protected Rigidbody rb;
-
+    protected Collider collider;
 
     virtual protected void Start()
     {
         rb = GetComponent<Rigidbody>();
+        collider = GetComponentInChildren<Collider>();
     }
     
     public virtual void Grab(Transform holdPoint)
@@ -16,7 +17,8 @@ public class PickupAble : MonoBehaviour
         this.holdPos = holdPoint;
         rb.useGravity = false;
         rb.isKinematic = true;
-
+        this.collider.gameObject.SetActive(false);
+        this.transform.SetParent(holdPos);
     }
 
     public virtual void Drop()
@@ -24,6 +26,8 @@ public class PickupAble : MonoBehaviour
         this.holdPos = null;
         rb.useGravity = true;
         rb.isKinematic = false;
+        this.collider.gameObject.SetActive(true);
+        this.transform.SetParent(null);
     }
 
     void FixedUpdate()

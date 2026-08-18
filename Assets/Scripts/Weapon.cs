@@ -13,7 +13,7 @@ public class Weapon : PickupAble
     protected PlayerPickUp playerPickup;
     protected Shaker shaker;
 
-    protected BoxCollider collider;
+
     protected bool equipped;
 
     [Header("Animation")]
@@ -24,12 +24,7 @@ public class Weapon : PickupAble
     [SerializeField] protected AudioSource audioPlayer;
 
 
-    protected override void Start()
-    {
-        base.Start();
-        collider = GetComponentInChildren<BoxCollider>();
 
-    }
 
     virtual protected void Update()
     {
@@ -87,17 +82,17 @@ public class Weapon : PickupAble
         playerMovement = null;
         playerPickup = null;
         shaker = null;
-        this.collider.gameObject.SetActive(true);
-        this.transform.SetParent(null);
+
+
     }
 
     public virtual void Equip()
     {
         this.equipped = true;
         this.visual.SetActive(true);
-        this.transform.SetParent(holdPos);
 
-        this.collider.gameObject.SetActive(false);
+
+
     }
 
     public virtual void Unequip()
