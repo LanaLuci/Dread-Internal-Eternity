@@ -41,9 +41,12 @@ public class EnemyEncounter : MonoBehaviour
     {
         currentWave = 0;
         StartCoroutine(NextWave(currentWave));
-        foreach (Door door in doors)
+        if (doors.Length > 0)
         {
-            door.DoorLock();
+            foreach (Door door in doors)
+            {
+                door.DoorLock();
+            }
         }
     }
 

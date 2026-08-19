@@ -102,9 +102,9 @@ public class PlayerPickUp : MonoBehaviour
                 currentLeftHandPickup = null;
 
             }
-            else if (currentLeftHandPickup.GetComponent<MeleeWeapon>() != null) //prioritize unequip melee
+            else if (currentLeftHandPickup.TryGetComponent<MeleeWeapon>(out MeleeWeapon melee) != null) //prioritize unequip melee
             {
-                currentLeftHandPickup.GetComponent<MeleeWeapon>().Unequip();
+                melee.Unequip();
                 currentLeftHandPickup = null;
                 storageID--;
             }

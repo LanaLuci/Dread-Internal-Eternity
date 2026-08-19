@@ -6,7 +6,7 @@ public class BasicEnemy : PoEnemy
     [Header("Melee Enemy Exclusive")]
     [SerializeField] protected GameObject atkVFX;
     [SerializeField] protected Transform firepoint;
-    [SerializeField] protected Vector3 angleChange;
+    [SerializeField] protected Vector3 angleOffset;
     [SerializeField] protected float detectionRange, attackRange, spd, attackCD, dmg, attackDelay;
 
     protected static int AttackTrigger = Animator.StringToHash("Attack");
@@ -82,7 +82,7 @@ public class BasicEnemy : PoEnemy
         {
             yield return new WaitForSeconds(attackDelay - 0.5f);
             GameObject slashVFX = Instantiate(atkVFX, firepoint.position, firepoint.rotation);
-            slashVFX.transform.rotation *= Quaternion.Euler(angleChange);
+            slashVFX.transform.rotation *= Quaternion.Euler(angleOffset);
             animator.SetTrigger(AttackTrigger);
             yield return new WaitForSeconds(0.5f);
 
@@ -90,12 +90,12 @@ public class BasicEnemy : PoEnemy
         else
         {
             GameObject slashVFX = Instantiate(atkVFX, firepoint.position, firepoint.rotation);
-            slashVFX.transform.rotation *= Quaternion.Euler(angleChange);    
+            slashVFX.transform.rotation *= Quaternion.Euler(angleOffset);    
             animator.SetTrigger(AttackTrigger);
             yield return new WaitForSeconds(attackDelay);
         }
 
-        RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 2.5f, dir, attackRange);
+        RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 1f, dir, attackRange);
         foreach (var hit in hits)
         {
             if (hit.transform.root.CompareTag("Enemy"))
@@ -109,6 +109,16 @@ public class BasicEnemy : PoEnemy
 
         }
 
+
+    }
+    void OnDrawGizmosSelected()
+    {
+
+
+        Vector3 end = firepoint.position + firepoint.forward * attackRange;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(firepoint.position, end);
+        Gizmos.DrawWireSphere(end, 1f);
 
     }
 }

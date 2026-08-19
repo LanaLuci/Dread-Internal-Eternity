@@ -1552,9 +1552,9 @@ MonoBehaviour:
   animator: {fileID: 5736603695934069998}
   atkVFX: {fileID: 8520227851244422601, guid: f51deb8d3b0f2d447824cd3e19ee8f89, type: 3}
   firepoint: {fileID: 5956022830717754311}
-  angleChange: {x: 0, y: 180, z: 135}
+  angleOffset: {x: 0, y: 180, z: 135}
   detectionRange: 20
-  attackRange: 5
+  attackRange: 2.5
   spd: 3
   attackCD: 1
   dmg: 8

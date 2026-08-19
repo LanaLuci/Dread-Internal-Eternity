@@ -1,11 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class MeleeWeapon : PickupAble
 {
     [Header("Generic Proterties - Melee Weapon")]
-    [SerializeField] protected float atkCD;
-    [SerializeField] protected GameObject visual;
     [SerializeField] protected int storageID;
+    [SerializeField] protected float atkCD, atkRange, dmg, atkRadius;
+    [SerializeField] protected GameObject visual, slashVFX;
+
+    [SerializeField] protected Transform atkBegin;
+    [SerializeField] protected Vector3 angleOffset;
 
     protected float atkTimer;
     protected PlayerMovement playerMovement;
@@ -45,7 +49,44 @@ public class MeleeWeapon : PickupAble
 
     virtual protected void Slash()
     {
+
         atkTimer = atkCD;
+        StartCoroutine(AttackCoroutine(atkBegin));
+    }
+    void OnDrawGizmosSelected()
+    {
+
+
+        Vector3 end = atkBegin.position + atkBegin.forward * atkRange;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(atkBegin.position, end);
+        Gizmos.DrawWireSphere(end, atkRadius);
+
+    }
+    virtual protected IEnumerator AttackCoroutine(Transform start)
+    {
+        //PlayAnim();
+        if (slashVFX != null) {
+            GameObject vfx = Instantiate(slashVFX, start.position, start.rotation);
+            vfx.transform.rotation *= Quaternion.Euler(angleOffset);
+        }
+        yield return new WaitForSeconds(0.15f);
+
+        Vector3 dir = new Vector3(start.rotation.x, start.rotation.y, start.rotation.z);
+        RaycastHit[] hits = Physics.SphereCastAll(start.position, atkRadius, dir, atkRange);
+        foreach (var hit in hits)
+        {
+            if (hit.transform.root.CompareTag("Player"))
+                continue;
+            IDmgable dmgable = hit.transform.GetComponentInParent<IDmgable>();
+            if (dmgable != null && dmgable != this)
+            {
+                dmgable.TakeDmg(dmg);
+
+            }
+
+        }
+
     }
 
 
