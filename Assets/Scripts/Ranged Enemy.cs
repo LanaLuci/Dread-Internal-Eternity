@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class RangedEnemy : PoEnemy
+public class RangedEnemy : PoEnemy, IParriable
 {
     [Header("Ranged Projectile Enemy Exclusive")]
     [SerializeField] protected GameObject projPrefab;
@@ -9,7 +9,7 @@ public class RangedEnemy : PoEnemy
     [SerializeField] protected float detectionRange, warningRange, spd, attackCD, attackDelay;
     [Header("For Turning Barrel")]
     [SerializeField] private GameObject barrel;
-    protected float attackTimer;
+    protected float attackTimer, interruptWindow;
     protected Transform target;
     protected bool aiming = false;
 
@@ -82,11 +82,30 @@ public class RangedEnemy : PoEnemy
     {
         attackTimer = attackCD;
         aiming = true;
+        interruptWindow = attackDelay;
+        while (interruptWindow > 0)
+        {
+            if (!aiming)
+            {
 
-        yield return new WaitForSeconds(attackDelay);
+                yield break;
+            }
+            yield return null;
+            interruptWindow -= Time.deltaTime;
+
+        }
         aiming = false;
         GameObject proj = Instantiate(projPrefab, firepoint.position, firepoint.rotation);
 
          //animator.SetTrigger(AttackTrigger);
+    }
+
+    public virtual void GetParried()
+    {
+        if (interruptWindow > 0)
+        {
+            Debug.Log("Interrupt");
+            aiming = false;
+        }
     }
 }

@@ -15,8 +15,8 @@ TagManager:
   - Floor
   - Player
   - Wall
-  - NonSelfCollide
-  - 
+  - NonCollideProjectile
+  - Pickup
   - 
   - 
   - 

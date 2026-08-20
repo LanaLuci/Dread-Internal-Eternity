@@ -239,7 +239,7 @@ MonoBehaviour:
   firepoint: {fileID: 4756332344806838146}
   angleOffset: {x: 0, y: 90, z: 0}
   detectionRange: 20
-  attackRange: 1.5
+  attackRange: 4
   spd: 7.5
   attackCD: 1.75
   dmg: 5

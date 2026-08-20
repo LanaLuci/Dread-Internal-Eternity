@@ -51,7 +51,7 @@ public class MeleeWeapon : PickupAble
     {
 
         atkTimer = atkCD;
-        StartCoroutine(AttackCoroutine(atkBegin));
+        StartCoroutine(AttackCoroutine(this.atkBegin));
     }
     void OnDrawGizmosSelected()
     {
@@ -59,21 +59,23 @@ public class MeleeWeapon : PickupAble
 
         Vector3 end = atkBegin.position + atkBegin.forward * atkRange;
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(atkBegin.position, end);
+
         Gizmos.DrawWireSphere(end, atkRadius);
+        Gizmos.DrawWireSphere(atkBegin.position, atkRadius);
 
     }
     virtual protected IEnumerator AttackCoroutine(Transform start)
     {
-        //PlayAnim();
+        PlayAnim();
         if (slashVFX != null) {
             GameObject vfx = Instantiate(slashVFX, start.position, start.rotation);
+            vfx.transform.SetParent(start);
             vfx.transform.rotation *= Quaternion.Euler(angleOffset);
         }
         yield return new WaitForSeconds(0.15f);
 
-        Vector3 dir = new Vector3(start.rotation.x, start.rotation.y, start.rotation.z);
-        RaycastHit[] hits = Physics.SphereCastAll(start.position, atkRadius, dir, atkRange);
+
+        RaycastHit[] hits = Physics.SphereCastAll(start.position, atkRadius, start.forward, atkRange);
         foreach (var hit in hits)
         {
             if (hit.transform.root.CompareTag("Player"))
@@ -82,6 +84,8 @@ public class MeleeWeapon : PickupAble
             if (dmgable != null && dmgable != this)
             {
                 dmgable.TakeDmg(dmg);
+                if (dmgable is IParriable parriable)
+                    parriable.GetParried();
 
             }
 
@@ -126,8 +130,8 @@ public class MeleeWeapon : PickupAble
 
     }
 
-    //virtual protected void PlayAnim()
-    //{
-    //    animator.SetTrigger(AttackTrigger);
-    //}
+    virtual protected void PlayAnim()
+    {
+        animator.SetTrigger(AttackTrigger);
+    }
 }

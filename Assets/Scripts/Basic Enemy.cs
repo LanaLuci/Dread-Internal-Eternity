@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class BasicEnemy : PoEnemy
+public class BasicEnemy : PoEnemy, IParriable
 {
     [Header("Melee Enemy Exclusive")]
     [SerializeField] protected GameObject atkVFX;
@@ -11,7 +11,8 @@ public class BasicEnemy : PoEnemy
 
     protected static int AttackTrigger = Animator.StringToHash("Attack");
     protected Transform target;
-    protected float attackTimer;
+    protected float attackTimer, parriableWindow;
+    protected bool parried = false;
 
     protected override void Start()
     {
@@ -38,13 +39,16 @@ public class BasicEnemy : PoEnemy
                 Vector3 dir = (target.position - transform.position).normalized;
                 if (Physics.Raycast(transform.position, dir, dist, blockLayer))
                 {
-                    return;
                     animator.SetBool("Walking", false);
+                    return;
+
                 }
 
-
-                animator.SetBool("Walking", true);
-                rb.linearVelocity = new Vector3(dir.x * spd,rb.linearVelocity.y,dir.z * spd);
+                if (dist > 3f)
+                {
+                    animator.SetBool("Walking", true);
+                    rb.linearVelocity = new Vector3(dir.x * spd, rb.linearVelocity.y, dir.z * spd);
+                }
                 dir.y = 0f;
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
 
@@ -76,23 +80,45 @@ public class BasicEnemy : PoEnemy
     {
         attackTimer = attackCD;
 
-
+        animator.SetBool("Walking", false);
 
         if (attackDelay > 0.5f)
         {
             yield return new WaitForSeconds(attackDelay - 0.5f);
+
             GameObject slashVFX = Instantiate(atkVFX, firepoint.position, firepoint.rotation);
             slashVFX.transform.rotation *= Quaternion.Euler(angleOffset);
             animator.SetTrigger(AttackTrigger);
-            yield return new WaitForSeconds(0.5f);
+            parriableWindow = 0.5f;
+            parried = false;
+            while (parriableWindow > 0)
+            {
+                if (parried)
+                    yield break;
+                yield return null;
+                parriableWindow -= Time.deltaTime;
+                
+                
+            }
 
         }
         else
         {
+
             GameObject slashVFX = Instantiate(atkVFX, firepoint.position, firepoint.rotation);
             slashVFX.transform.rotation *= Quaternion.Euler(angleOffset);    
             animator.SetTrigger(AttackTrigger);
-            yield return new WaitForSeconds(attackDelay);
+            parriableWindow = attackDelay;
+            parried = false;
+            while (parriableWindow > 0)
+            {
+                if (parried)
+                    yield break;
+                yield return null;
+                parriableWindow -= Time.deltaTime;
+
+
+            }
         }
 
         RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 1f, dir, attackRange);
@@ -111,6 +137,15 @@ public class BasicEnemy : PoEnemy
 
 
     }
+    public virtual void GetParried()
+    {
+        if (parriableWindow > 0)
+        {
+            parried = true;
+            Debug.Log("Parry");
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
 

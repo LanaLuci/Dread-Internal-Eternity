@@ -1098,7 +1098,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7903617195143002938}
   - {fileID: 784640773639031047}
   - {fileID: 175214366482185508}
   - {fileID: 4845770156383838981}
@@ -1349,6 +1348,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7903617195143002938}
   - {fileID: 4728622419307487747}
   m_Father: {fileID: 7463675524179339557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2568,14 +2568,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5291939495187479862}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2466005424678162056}
   - {fileID: 8879073018924780391}
-  m_Father: {fileID: 4728622419307487747}
+  m_Father: {fileID: 4586403535754525650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5393907315202547160
 GameObject:
@@ -4044,7 +4044,7 @@ GameObject:
   - component: {fileID: 4269045543941426990}
   m_Layer: 0
   m_Name: CannonLite
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

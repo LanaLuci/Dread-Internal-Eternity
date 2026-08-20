@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 58586563}
   - component: {fileID: 58586565}
   - component: {fileID: 58586564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Sight_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1358,7 +1358,7 @@ GameObject:
   - component: {fileID: 180261781}
   - component: {fileID: 180261783}
   - component: {fileID: 180261782}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_C_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1930,7 +1930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 237931655}
   - component: {fileID: 237931656}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1984,7 +1984,7 @@ GameObject:
   - component: {fileID: 242177522}
   - component: {fileID: 242177524}
   - component: {fileID: 242177523}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_C_Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2437,7 +2437,7 @@ GameObject:
   - component: {fileID: 287946494}
   - component: {fileID: 287946496}
   - component: {fileID: 287946495}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.032
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2632,7 +2632,7 @@ GameObject:
   - component: {fileID: 295792011}
   - component: {fileID: 295792013}
   - component: {fileID: 295792012}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2803,7 +2803,7 @@ GameObject:
   m_Component:
   - component: {fileID: 298688766}
   - component: {fileID: 298688768}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3060,7 +3060,7 @@ GameObject:
   - component: {fileID: 315689416}
   - component: {fileID: 315689418}
   - component: {fileID: 315689417}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3580,7 +3580,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374749888}
-  m_Layer: 0
+  - component: {fileID: 374749889}
+  m_Layer: 10
   m_Name: SciFiSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3596,8 +3597,8 @@ Transform:
   m_GameObject: {fileID: 374749887}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: 0, y: -0.75, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 295792011}
@@ -3605,6 +3606,28 @@ Transform:
   - {fileID: 1516658192}
   m_Father: {fileID: 1664705499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &374749889
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374749887}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dceceb6cde92c78478c33a4e5e6f30d4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &376327632
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,7 +3639,7 @@ GameObject:
   - component: {fileID: 376327633}
   - component: {fileID: 376327635}
   - component: {fileID: 376327634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.030
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4019,7 +4042,7 @@ GameObject:
   - component: {fileID: 419601856}
   - component: {fileID: 419601858}
   - component: {fileID: 419601859}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4757,7 +4780,7 @@ GameObject:
   - component: {fileID: 501255589}
   - component: {fileID: 501255591}
   - component: {fileID: 501255590}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4952,7 +4975,7 @@ GameObject:
   - component: {fileID: 517782723}
   - component: {fileID: 517782725}
   - component: {fileID: 517782724}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.022
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5038,7 +5061,7 @@ GameObject:
   - component: {fileID: 527624455}
   - component: {fileID: 527624457}
   - component: {fileID: 527624456}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5231,7 +5254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545252464}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Firepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5740,7 +5763,7 @@ GameObject:
   - component: {fileID: 583324203}
   - component: {fileID: 583324205}
   - component: {fileID: 583324204}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_C_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5912,7 +5935,7 @@ GameObject:
   - component: {fileID: 590860129}
   - component: {fileID: 590860131}
   - component: {fileID: 590860130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6892,7 +6915,7 @@ GameObject:
   - component: {fileID: 720834530}
   - component: {fileID: 720834532}
   - component: {fileID: 720834531}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.020
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8248,7 +8271,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829829747}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Firepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8507,7 +8530,7 @@ MonoBehaviour:
   pickupRange: 3
   pickupLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
   arsenal:
   - {fileID: 0}
   - {fileID: 0}
@@ -8793,7 +8816,7 @@ GameObject:
   - component: {fileID: 885815763}
   - component: {fileID: 885815765}
   - component: {fileID: 885815764}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_C_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9274,7 +9297,7 @@ GameObject:
   - component: {fileID: 941725656}
   - component: {fileID: 941725658}
   - component: {fileID: 941725657}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.033
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9469,7 +9492,7 @@ GameObject:
   - component: {fileID: 959608305}
   - component: {fileID: 959608307}
   - component: {fileID: 959608306}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9553,7 +9576,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 969294462}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Offset Changer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9568,7 +9591,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 969294461}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40957603, y: 0.81515586, z: -0.003996238, w: 0.40957603}
+  m_LocalRotation: {x: 0.27042437, y: 0.88037086, z: 0.020891126, w: 0.3890777}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9576,7 +9599,7 @@ Transform:
   - {fileID: 1664705499}
   - {fileID: 237931655}
   m_Father: {fileID: 1370275017}
-  m_LocalEulerAnglesHint: {x: 20, y: 135, z: 45}
+  m_LocalEulerAnglesHint: {x: 10, y: 135, z: 30}
 --- !u!1 &980454599
 GameObject:
   m_ObjectHideFlags: 0
@@ -10015,7 +10038,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1047556457}
   - component: {fileID: 1047556454}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11122,7 +11145,7 @@ GameObject:
   - component: {fileID: 1175995142}
   - component: {fileID: 1175995144}
   - component: {fileID: 1175995143}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_C_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16217,7 +16240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1218326069}
   - component: {fileID: 1218326070}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16380,7 +16403,7 @@ GameObject:
   - component: {fileID: 1246343474}
   - component: {fileID: 1246343476}
   - component: {fileID: 1246343475}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16527,7 +16550,7 @@ GameObject:
   - component: {fileID: 1264345018}
   - component: {fileID: 1264345020}
   - component: {fileID: 1264345019}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cylinder.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16786,7 +16809,7 @@ GameObject:
   - component: {fileID: 1297179013}
   - component: {fileID: 1297179015}
   - component: {fileID: 1297179014}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17573,7 +17596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1359071742}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Attack Begin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17589,7 +17612,7 @@ Transform:
   m_GameObject: {fileID: 1359071741}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0.5, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17606,7 +17629,7 @@ GameObject:
   - component: {fileID: 1360832079}
   - component: {fileID: 1360832081}
   - component: {fileID: 1360832080}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Stock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17692,7 +17715,7 @@ GameObject:
   - component: {fileID: 1370275017}
   - component: {fileID: 1370275019}
   - component: {fileID: 1370275018}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sabre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17730,14 +17753,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storageID: 0
   atkCD: 1
-  atkRange: 0.2
+  atkRange: 0.3
   dmg: 5
-  atkRadius: 1.5
+  atkRadius: 1.2
   visual: {fileID: 1664705498}
   slashVFX: {fileID: 8520227851244422601, guid: e0574fa967b3a4846b2f56a5e16fb334, type: 3}
   atkBegin: {fileID: 1359071742}
-  angleOffset: {x: -20, y: 90, z: 0}
-  animator: {fileID: 0}
+  angleOffset: {x: -15, y: 90, z: 20}
+  animator: {fileID: 374749889}
   audioPlayer: {fileID: 0}
 --- !u!54 &1370275019
 Rigidbody:
@@ -17884,7 +17907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1398537593}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head Parts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18030,7 +18053,7 @@ GameObject:
   - component: {fileID: 1419806753}
   - component: {fileID: 1419806755}
   - component: {fileID: 1419806754}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18927,7 +18950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1493928450}
   - component: {fileID: 1493928449}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19374,7 +19397,7 @@ GameObject:
   - component: {fileID: 1516658192}
   - component: {fileID: 1516658194}
   - component: {fileID: 1516658193}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19568,7 +19591,7 @@ GameObject:
   - component: {fileID: 1527123553}
   - component: {fileID: 1527123555}
   - component: {fileID: 1527123554}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19880,7 +19903,7 @@ GameObject:
   - component: {fileID: 1551461192}
   - component: {fileID: 1551461194}
   - component: {fileID: 1551461193}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Rail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19966,7 +19989,7 @@ GameObject:
   - component: {fileID: 1551773375}
   - component: {fileID: 1551773377}
   - component: {fileID: 1551773376}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Sight_Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20701,7 +20724,7 @@ GameObject:
   - component: {fileID: 1651889150}
   - component: {fileID: 1651889152}
   - component: {fileID: 1651889151}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_C_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20785,7 +20808,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1655265893}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Firepoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20925,7 +20948,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1664705499}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21762,7 +21785,7 @@ GameObject:
   - component: {fileID: 1759747780}
   - component: {fileID: 1759747782}
   - component: {fileID: 1759747781}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21848,7 +21871,7 @@ GameObject:
   - component: {fileID: 1762696692}
   - component: {fileID: 1762696694}
   - component: {fileID: 1762696693}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22120,7 +22143,7 @@ GameObject:
   - component: {fileID: 1770065246}
   - component: {fileID: 1770065248}
   - component: {fileID: 1770065247}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22551,7 +22574,7 @@ GameObject:
   - component: {fileID: 1849244089}
   - component: {fileID: 1849244090}
   - component: {fileID: 1849244091}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Railgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23385,7 +23408,7 @@ GameObject:
   - component: {fileID: 1870588467}
   - component: {fileID: 1870588469}
   - component: {fileID: 1870588468}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Muzzle_Pistol_Brake_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23557,7 +23580,7 @@ GameObject:
   - component: {fileID: 1902093737}
   - component: {fileID: 1902093739}
   - component: {fileID: 1902093738}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24141,7 +24164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1925966051}
   - component: {fileID: 1925966052}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24644,7 +24667,7 @@ GameObject:
   - component: {fileID: 1983240733}
   - component: {fileID: 1983240735}
   - component: {fileID: 1983240734}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.016
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24815,7 +24838,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1990223666}
   - component: {fileID: 1990223667}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24892,7 +24915,7 @@ GameObject:
   - component: {fileID: 2058057582}
   - component: {fileID: 2058057584}
   - component: {fileID: 2058057583}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25173,7 +25196,7 @@ GameObject:
   - component: {fileID: 2072645432}
   - component: {fileID: 2072645434}
   - component: {fileID: 2072645433}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25671,7 +25694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2113613351}
   - component: {fileID: 2113613352}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25800,7 +25823,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2125815930}
   - component: {fileID: 2125815931}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShotGun_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26055,7 +26078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2147010101}
   - component: {fileID: 2147010102}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Railgun 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

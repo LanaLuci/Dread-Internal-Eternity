@@ -22,6 +22,17 @@ public class ExplosiveProjectile : PoProjectile
 
     protected override void OnCollisionEnter(Collision collision)
     {
+        Explode();
+    }
+
+    public void ChargeUpRadius(float amount)
+    {
+        power = power / (radius / (radius + amount));
+        radius += amount;
+
+    }
+    public void Explode()
+    {
         VFX vfx = Instantiate(explosionVFX, transform.position, transform.rotation).GetComponent<VFX>();
         vfx.radiusMax = radius;
         AudioSource.PlayClipAtPoint(explosionSFX, transform.position);
@@ -38,18 +49,10 @@ public class ExplosiveProjectile : PoProjectile
             {
                 if (hitRB.GetComponent<PoProjectile>() != null)
                     Destroy(hitRB.gameObject);
-                hitRB.AddExplosionForce(power, transform.position,radius, 1f, ForceMode.Impulse);
+                hitRB.AddExplosionForce(power, transform.position, radius, 1f, ForceMode.Impulse);
             }
 
         }
         Destroy(this.gameObject);
     }
-
-    public void ChargeUpRadius(float amount)
-    {
-        power = power / (radius / (radius + amount));
-        radius += amount;
-
-    }
-
 }

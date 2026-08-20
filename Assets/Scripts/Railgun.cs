@@ -124,7 +124,11 @@ public class Railgun : Weapon
 
 
                 StartCoroutine(BeamRender(start, wallHit.point, 0.4f));
-
+                if (wallHit.transform.TryGetComponent<ExplosiveProjectile>(out ExplosiveProjectile explosive))
+                {
+                    explosive.ChargeUpRadius(primaryDmg / 4f);
+                    explosive.Explode();
+                }
 
 
                 RaycastHit[] hits = Physics.SphereCastAll(start, 0.2f, dir, wallHit.distance);
@@ -192,7 +196,11 @@ public class Railgun : Weapon
             {
 
                 StartCoroutine(BeamRender(start, wallHit.point, 0.4f));
-
+                if (wallHit.transform.TryGetComponent<ExplosiveProjectile>(out ExplosiveProjectile explosive))
+                {
+                    explosive.ChargeUpRadius(primaryDmg / 4f);
+                    explosive.Explode();
+                }
 
 
                 RaycastHit[] hits = Physics.SphereCastAll(start, 0.2f, dir, wallHit.distance);
