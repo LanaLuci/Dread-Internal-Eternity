@@ -10,6 +10,7 @@ public class PlayerPickUp : MonoBehaviour
     private int weaponID = -1;
     private int storageID = -1;
     private PickupAble currentRightHandPickup, currentLeftHandPickup;
+    public PickupAble PlayerLeftHand => currentLeftHandPickup;
 
 
     void Update()

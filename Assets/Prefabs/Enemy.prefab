@@ -1554,11 +1554,14 @@ MonoBehaviour:
   firepoint: {fileID: 5956022830717754311}
   angleOffset: {x: 0, y: 180, z: 135}
   detectionRange: 20
-  attackRange: 4
+  attackRange: 2.5
   spd: 3
   attackCD: 1
   dmg: 8
   attackDelay: 0.75
+  attackRadius: 1
+  impactFrame: {fileID: 3860603125401111188, guid: 16ebf886c3da84149a9309dec75f6360, type: 3}
+  parrySFX: {fileID: 8300000, guid: 199b7552e73aeca47909601b96a33539, type: 3}
 --- !u!65 &1574835448321983185
 BoxCollider:
   m_ObjectHideFlags: 0

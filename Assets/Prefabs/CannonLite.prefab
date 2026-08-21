@@ -4105,12 +4105,12 @@ MonoBehaviour:
   maxHP: 7
   electrifyRadius: 5
   animator: {fileID: 0}
-  projPrefab: {fileID: 1540503967581995318, guid: 1cfa5804ea9b0154795f95af79352d9c, type: 3}
+  projPrefab: {fileID: 4837728542730710607, guid: 1cfa5804ea9b0154795f95af79352d9c, type: 3}
   firepoint: {fileID: 3097156631481069048}
   detectionRange: 20
-  warningRange: 9
-  spd: 4
-  attackCD: 1.2
+  warningRange: 5
+  spd: 3
+  attackCD: 2.2
   attackDelay: 0.5
   barrel: {fileID: 5291939495187479862}
 --- !u!54 &4269045543941426990

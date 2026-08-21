@@ -11,6 +11,8 @@ public class MeleeWeapon : PickupAble
     [SerializeField] protected Transform atkBegin;
     [SerializeField] protected Vector3 angleOffset;
 
+
+
     protected float atkTimer;
     protected PlayerMovement playerMovement;
     protected PlayerPickUp playerPickup;
@@ -25,6 +27,7 @@ public class MeleeWeapon : PickupAble
 
     [Header("Audio")]
     [SerializeField] protected AudioSource audioPlayer;
+    [SerializeField] protected AudioClip swingSFX;
 
 
 
@@ -41,19 +44,19 @@ public class MeleeWeapon : PickupAble
         if (Input.GetKeyDown(KeyCode.Q) && !(atkTimer > 0))
         {
 
-            Slash();
+            Swing();
         }
 
 
     }
 
-    virtual protected void Slash()
+    virtual protected void Swing()
     {
 
         atkTimer = atkCD;
         StartCoroutine(AttackCoroutine(this.atkBegin));
     }
-    void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
 
 
@@ -67,6 +70,7 @@ public class MeleeWeapon : PickupAble
     virtual protected IEnumerator AttackCoroutine(Transform start)
     {
         PlayAnim();
+        audioPlayer.PlayOneShot(swingSFX);
         if (slashVFX != null) {
             GameObject vfx = Instantiate(slashVFX, start.position, start.rotation);
             vfx.transform.SetParent(start);
@@ -75,6 +79,13 @@ public class MeleeWeapon : PickupAble
         yield return new WaitForSeconds(0.15f);
 
 
+
+        DealDmg(start);
+
+    }
+
+    protected virtual void DealDmg(Transform start)
+    {
         RaycastHit[] hits = Physics.SphereCastAll(start.position, atkRadius, start.forward, atkRange);
         foreach (var hit in hits)
         {
@@ -90,7 +101,6 @@ public class MeleeWeapon : PickupAble
             }
 
         }
-
     }
 
 
@@ -116,6 +126,7 @@ public class MeleeWeapon : PickupAble
     {
 
         this.equipped = true;
+        if (visual != null)
         this.visual.SetActive(true);
 
 
@@ -126,12 +137,17 @@ public class MeleeWeapon : PickupAble
     {
 
         this.equipped = false;
-        this.visual.SetActive(false);
+        if (visual != null)
+            this.visual.SetActive(false);
 
     }
 
     virtual protected void PlayAnim()
     {
-        animator.SetTrigger(AttackTrigger);
+        if (animator != null)
+        {
+            animator.SetTrigger(AttackTrigger);
+        }
+
     }
 }

@@ -85,7 +85,7 @@ VisualEffect:
       - m_Value: {x: 0, y: 0.3333331, z: 2.0000005, w: 0.32941177}
         m_Name: FirstColor
         m_Overridden: 1
-      - m_Value: {x: 0.00096797955, y: 0, z: 1.0000001, w: 0.65882355}
+      - m_Value: {x: 0, y: 0.04128981, z: 1.0000001, w: 0.65882355}
         m_Name: ThirdColor
         m_Overridden: 1
       - m_Value: {x: 0, y: 0.14253068, z: 1.6010783, w: 0.5921569}
@@ -94,7 +94,7 @@ VisualEffect:
       - m_Value: {x: 1, y: 1, z: 1, w: 0}
         m_Name: FresnelColor
         m_Overridden: 1
-      - m_Value: {x: 0.01793691, y: 0, z: 19.698313, w: 1}
+      - m_Value: {x: 0, y: 0.16707598, z: 19.69831, w: 1}
         m_Name: Fresnel Color
         m_Overridden: 1
     m_Uint:

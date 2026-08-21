@@ -249,6 +249,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Knockback(float power, int mode)
     {
+        cancelMomentum = true;
         if (mode == 0)
         {
             knockbackVelocity = -camPos.forward * power;

@@ -7,7 +7,9 @@ public class BasicEnemy : PoEnemy, IParriable
     [SerializeField] protected GameObject atkVFX;
     [SerializeField] protected Transform firepoint;
     [SerializeField] protected Vector3 angleOffset;
-    [SerializeField] protected float detectionRange, attackRange, spd, attackCD, dmg, attackDelay;
+    [SerializeField] protected float detectionRange, attackRange, spd, attackCD, dmg, attackDelay, attackRadius;
+    [SerializeField] protected GameObject impactFrame;
+    [SerializeField] protected AudioClip parrySFX;
 
     protected static int AttackTrigger = Animator.StringToHash("Attack");
     protected Transform target;
@@ -54,7 +56,7 @@ public class BasicEnemy : PoEnemy, IParriable
 
                 rb.MoveRotation(Quaternion.RotateTowards(rb.rotation,targetRotation,Time.deltaTime * 90f));
 
-                if (dist <= attackRange && attackTimer <= 0f)
+                if (dist <= (attackRange + firepoint.localPosition.z) && attackTimer <= 0f)
                 {
                     animator.SetBool("Walking", false);
                     Attack(transform.forward);
@@ -121,7 +123,7 @@ public class BasicEnemy : PoEnemy, IParriable
             }
         }
 
-        RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, 1f, dir, attackRange);
+        RaycastHit[] hits = Physics.SphereCastAll(firepoint.position, attackRadius, dir, attackRange);
         foreach (var hit in hits)
         {
             if (hit.transform.root.CompareTag("Enemy"))
@@ -143,6 +145,8 @@ public class BasicEnemy : PoEnemy, IParriable
         {
             parried = true;
             Debug.Log("Parry");
+            Instantiate(impactFrame, firepoint.position, firepoint.rotation);
+            AudioSource.PlayClipAtPoint(parrySFX, firepoint.position);
         }
     }
 
@@ -153,7 +157,10 @@ public class BasicEnemy : PoEnemy, IParriable
         Vector3 end = firepoint.position + firepoint.forward * attackRange;
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(firepoint.position, end);
-        Gizmos.DrawWireSphere(end, 1f);
+        Gizmos.DrawWireSphere(end, attackRadius);
+        Gizmos.color = Color.red;
+        end = transform.position + transform.forward * 3f;
+        Gizmos.DrawLine(transform.position, end);
 
     }
 }

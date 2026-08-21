@@ -30,7 +30,7 @@ public class PickupAble : MonoBehaviour
         this.transform.SetParent(null);
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (holdPos != null)
         {
