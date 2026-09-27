@@ -232,7 +232,7 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 320
-  maxHP: 4.5
+  maxHP: 5
   electrifyRadius: 3
   animator: {fileID: 6906638337593713508}
   atkVFX: {fileID: 8520227851244422601, guid: d0929c22497e5394e821541de803319e, type: 3}
@@ -242,9 +242,9 @@ MonoBehaviour:
   attackRange: 4
   spd: 7.5
   attackCD: 1.75
-  dmg: 5
+  dmg: 15
   attackDelay: 0.3
-  attackRadius: 0
+  attackRadius: 0.25
   impactFrame: {fileID: 3860603125401111188, guid: 16ebf886c3da84149a9309dec75f6360, type: 3}
   parrySFX: {fileID: 8300000, guid: 199b7552e73aeca47909601b96a33539, type: 3}
 --- !u!95 &6906638337593713508

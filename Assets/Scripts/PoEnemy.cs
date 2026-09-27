@@ -2,12 +2,14 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class PoEnemy : MonoBehaviour, IDmgable
+public class PoEnemy : MonoBehaviour, IDmgable, IParryable
 {
     [Header("Generic")]
     [SerializeField] protected LayerMask blockLayer;
     [SerializeField] protected float maxHP, electrifyRadius;
     [SerializeField] protected Animator animator;
+    protected GameFreezer freezer;
+    protected FlashbangEffect flashbang;
 
     protected float hp;
     protected Rigidbody rb;
@@ -21,6 +23,8 @@ public class PoEnemy : MonoBehaviour, IDmgable
     {
         hp = maxHP;
         rb = GetComponent<Rigidbody>();
+        freezer = GameObject.Find("GameFreezer").GetComponent<GameFreezer>();
+        flashbang = GameObject.Find("Flashbang").GetComponent<FlashbangEffect>();
     }
 
     public virtual void TakeDmg(float amount)
@@ -109,4 +113,6 @@ public class PoEnemy : MonoBehaviour, IDmgable
         OnDeath?.Invoke(this);
         Destroy(gameObject);
     }
+
+    public virtual void GetParried(float dmg, AudioClip parrySFX, GameObject parryVFX) { }
 }

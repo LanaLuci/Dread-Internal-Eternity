@@ -28,6 +28,10 @@ public class MeleeWeapon : PickupAble
     [Header("Audio")]
     [SerializeField] protected AudioSource audioPlayer;
     [SerializeField] protected AudioClip swingSFX;
+    [SerializeField] protected AudioClip parrySFX;
+
+    [Header("Impact Frame")]
+    [SerializeField] protected GameObject impactFrame;
 
 
 
@@ -95,8 +99,8 @@ public class MeleeWeapon : PickupAble
             if (dmgable != null && dmgable != this)
             {
                 dmgable.TakeDmg(dmg);
-                if (dmgable is IParriable parriable)
-                    parriable.GetParried();
+                if (dmgable is IParryable parryable)
+                    parryable.GetParried(dmg * 2f, parrySFX, impactFrame);
 
             }
 

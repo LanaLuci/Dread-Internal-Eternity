@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class RangedEnemy : PoEnemy, IParriable
+public class RangedEnemy : PoEnemy
 {
     [Header("Ranged Projectile Enemy Exclusive")]
     [SerializeField] protected GameObject projPrefab;
@@ -38,35 +38,38 @@ public class RangedEnemy : PoEnemy, IParriable
                 if (Physics.Raycast(transform.position, dir, dist, blockLayer))
                 {
                     return;
-                    //animator.SetBool("Walking", false);
+                    animator.SetBool("Walking", false);
                 }
-                //animator.SetBool("Walking", true);
+
                 if (dist <= warningRange)
                 {
                     rb.linearVelocity = new Vector3(-dir.x * spd, rb.linearVelocity.y, -dir.z * spd);
+                    animator.SetBool("Walking", true);
+                }
+                else
+                {
+                    animator.SetBool("Walking", false );
                 }
                 if (!aiming)
                 {
                     Vector3 bodyDir = dir;
                     bodyDir.y = 0f;
-                    Quaternion bodyRotation = Quaternion.LookRotation(dir);
+                    Quaternion bodyRotation = Quaternion.LookRotation(bodyDir);
 
                     rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, bodyRotation, Time.deltaTime * 120f));
                     Quaternion barrelRotation = Quaternion.LookRotation(dir);
                     barrel.transform.rotation = Quaternion.RotateTowards(barrel.transform.rotation, barrelRotation, Time.deltaTime * 120f);
+                    if (attackTimer <= 0f)
+                    {
+                        animator.SetBool("Walking", false);
+                        Attack(firepoint.forward);
+                    }
                 }
 
-                if (attackTimer <= 0f)
-                {
-                    //animator.SetBool("Walking", false);
-                    Attack(firepoint.forward);
-                }
+
 
             }
-            else
-            {
-                //animator.SetBool("Walking", false);
-            }
+
         }
 
     }
@@ -80,14 +83,14 @@ public class RangedEnemy : PoEnemy, IParriable
 
     protected virtual IEnumerator AttackCoroutine(Vector3 dir)
     {
-        attackTimer = attackCD;
+
         aiming = true;
         interruptWindow = attackDelay;
         while (interruptWindow > 0)
         {
             if (!aiming)
             {
-
+                attackTimer = attackCD * 0.4f;
                 yield break;
             }
             yield return null;
@@ -96,16 +99,27 @@ public class RangedEnemy : PoEnemy, IParriable
         }
         aiming = false;
         GameObject proj = Instantiate(projPrefab, firepoint.position, firepoint.rotation);
+        attackTimer = attackCD;
 
-         //animator.SetTrigger(AttackTrigger);
+        //animator.SetTrigger(AttackTrigger);
     }
 
-    public virtual void GetParried()
+    public override void GetParried(float dmg = 0f, AudioClip parrySFX = null, GameObject parryVFX = null)
     {
         if (interruptWindow > 0)
         {
             Debug.Log("Interrupt");
+            if (parryVFX != null)
+            {
+                Instantiate(parryVFX, firepoint.position, firepoint.rotation);
+            }
+            if (parrySFX != null)
+            {
+                AudioSource.PlayClipAtPoint(parrySFX, firepoint.position);
+            }
             aiming = false;
+            if(dmg > 0f) 
+                TakeDmg(dmg);
         }
     }
 }

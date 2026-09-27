@@ -1557,7 +1557,7 @@ MonoBehaviour:
   attackRange: 2.5
   spd: 3
   attackCD: 1
-  dmg: 8
+  dmg: 35
   attackDelay: 0.75
   attackRadius: 1
   impactFrame: {fileID: 3860603125401111188, guid: 16ebf886c3da84149a9309dec75f6360, type: 3}

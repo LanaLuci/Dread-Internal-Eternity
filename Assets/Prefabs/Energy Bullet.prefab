@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2490682742908407604}
   - component: {fileID: 2452389292244510268}
   - component: {fileID: 4644885389396753523}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Energy Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 4837728542730710607}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.913, y: 1.293, z: 0.4803728}
+  m_LocalPosition: {x: 1.3781514, y: 5.90814, z: 0.4803728}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -137,7 +137,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -155,9 +155,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0580698d79d16ac41803fdd5e26445bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spd: 16
-  dmg: 4
+  spd: 20
+  dmg: 12
   ricochet: 1
+  ricochetDelay: 0.2
+  ricochetSFX: {fileID: 0}
 --- !u!96 &2452389292244510268
 TrailRenderer:
   serializedVersion: 3
@@ -203,7 +205,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.5
+  m_Time: 0.2
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3

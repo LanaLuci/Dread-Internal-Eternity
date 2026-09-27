@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
             wallJump = wallJumpMax;
         }  
 
-        dashable = stamina > maxStamina *0.25f;
+        dashable = stamina > maxStamina *0.33f;
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
             dashWindow = 0.25f;
 
 
-                stamina -= maxStamina * 0.25f;
+                stamina -= maxStamina * 0.33f;
 
 
         }

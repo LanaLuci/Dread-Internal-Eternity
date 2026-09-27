@@ -1,15 +1,15 @@
 using UnityEngine;
 using System.Collections;
 
-public class BasicEnemy : PoEnemy, IParriable
+public class BasicEnemy : PoEnemy
 {
     [Header("Melee Enemy Exclusive")]
     [SerializeField] protected GameObject atkVFX;
     [SerializeField] protected Transform firepoint;
     [SerializeField] protected Vector3 angleOffset;
     [SerializeField] protected float detectionRange, attackRange, spd, attackCD, dmg, attackDelay, attackRadius;
-    [SerializeField] protected GameObject impactFrame;
-    [SerializeField] protected AudioClip parrySFX;
+
+
 
     protected static int AttackTrigger = Animator.StringToHash("Attack");
     protected Transform target;
@@ -139,14 +139,25 @@ public class BasicEnemy : PoEnemy, IParriable
 
 
     }
-    public virtual void GetParried()
+    public override void GetParried(float dmg = 0f, AudioClip parrySFX = null, GameObject parryVFX  = null)
     {
         if (parriableWindow > 0)
         {
             parried = true;
             Debug.Log("Parry");
-            Instantiate(impactFrame, firepoint.position, firepoint.rotation);
-            AudioSource.PlayClipAtPoint(parrySFX, firepoint.position);
+
+            if (parryVFX != null)
+            {
+                //Instantiate(parryVFX, firepoint.position, firepoint.rotation);
+            }
+            if (parrySFX != null)
+            {
+                AudioSource.PlayClipAtPoint(parrySFX, firepoint.position);
+            }
+            flashbang.ScreenFlash();
+            freezer.Hitstop();
+            if (dmg >0f)
+            TakeDmg(dmg);
         }
     }
 

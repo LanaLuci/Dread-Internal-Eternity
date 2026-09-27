@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 
 public class ExplosiveProjectile : PoProjectile
@@ -22,7 +23,9 @@ public class ExplosiveProjectile : PoProjectile
 
     protected override void OnCollisionEnter(Collision collision)
     {
+
         Explode();
+
     }
 
     public void ChargeUpRadius(float amount)
@@ -31,28 +34,66 @@ public class ExplosiveProjectile : PoProjectile
         radius += amount;
 
     }
-    public void Explode()
+    protected virtual IEnumerator DelayedExplode()
     {
-        VFX vfx = Instantiate(explosionVFX, transform.position, transform.rotation).GetComponent<VFX>();
-        vfx.radiusMax = radius;
-        AudioSource.PlayClipAtPoint(explosionSFX, transform.position);
+        rb.useGravity = false;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        yield return new WaitForSecondsRealtime(0.5f);
+        Explode();
+        
+    }
+
+    public virtual void Explode()
+    {
+        if (explosionVFX != null)
+        {
+            Debug.Log("boom");
+            VFX vfx = Instantiate(explosionVFX, transform.position, transform.rotation).GetComponent<VFX>();
+            vfx.radiusMax = radius;
+        }
+
+        if (explosionSFX != null)
+        {
+            Debug.Log("BOOM");
+            AudioSource.PlayClipAtPoint(explosionSFX, transform.position);
+        }
 
         Collider[] hits = Physics.OverlapSphere(transform.position, radius);
 
         foreach (var hit in hits)
         {
-            IDmgable dmgable = hit.transform.GetComponent<IDmgable>();
+            PistolBullet ricochetBullet = hit.transform.GetComponentInParent<PistolBullet>();
+            Rigidbody hitRB = hit.transform.GetComponentInParent<Rigidbody>();
+
+            IDmgable dmgable = hit.transform.GetComponentInParent<IDmgable>();
             if (dmgable != null)
                 dmgable.TakeDmg(this.dmg);
-            Rigidbody hitRB = hit.transform.GetComponentInParent<Rigidbody>();
-            if (hitRB != null && hitRB.transform.GetComponentInParent<PistolBullet>() == null)
+            if (ricochetBullet != null)
             {
-                if (hitRB.GetComponent<PoProjectile>() != null)
-                    Destroy(hitRB.gameObject);
+
+                continue;
+            }
+
+            if (hitRB != null)
+            {
+
+
+
+
                 hitRB.AddExplosionForce(power, transform.position, radius, 1f, ForceMode.Impulse);
+
             }
 
         }
         Destroy(this.gameObject);
     }
+    protected override void OnTriggerEnter(Collider collider)
+    {
+        if (collider.GetComponentInParent<PistolBullet>() != null)
+        {
+            StartCoroutine(DelayedExplode());
+        }
+    }
+
 }
